@@ -1,0 +1,639 @@
+
+UM6_test.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         00000466  00000000  00000000  00000094  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .data         00000008  00802000  00000466  000004fa  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .bss          0000000d  00802008  00802008  00000502  2**0
+                  ALLOC
+  3 .stab         00000714  00000000  00000000  00000504  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  4 .stabstr      00000082  00000000  00000000  00000c18  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .comment      0000002f  00000000  00000000  00000c9a  2**0
+                  CONTENTS, READONLY
+  6 .debug_aranges 000000b0  00000000  00000000  00000cc9  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_info   00000df8  00000000  00000000  00000d79  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_abbrev 000002e7  00000000  00000000  00001b71  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_line   000004c1  00000000  00000000  00001e58  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_frame  000001dc  00000000  00000000  0000231c  2**2
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_str    000008f2  00000000  00000000  000024f8  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 12 .debug_loc    000007c0  00000000  00000000  00002dea  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 13 .debug_ranges 000000a0  00000000  00000000  000035aa  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	0c 94 fa 00 	jmp	0x1f4	; 0x1f4 <__ctors_end>
+   4:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
+   8:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
+   c:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
+  10:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
+  14:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
+  18:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
+  1c:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
+  20:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
+  24:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
+  28:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
+  2c:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
+  30:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
+  34:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
+  38:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
+  3c:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
+  40:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
+  44:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
+  48:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
+  4c:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
+  50:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
+  54:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
+  58:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
+  5c:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
+  60:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
+  64:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
+  68:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
+  6c:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
+  70:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
+  74:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
+  78:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
+  7c:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
+  80:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
+  84:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
+  88:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
+  8c:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
+  90:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
+  94:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
+  98:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
+  9c:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
+  a0:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
+  a4:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
+  a8:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
+  ac:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
+  b0:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
+  b4:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
+  b8:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
+  bc:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
+  c0:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
+  c4:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
+  c8:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
+  cc:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
+  d0:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
+  d4:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
+  d8:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
+  dc:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
+  e0:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
+  e4:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
+  e8:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
+  ec:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
+  f0:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
+  f4:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
+  f8:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
+  fc:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
+ 100:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
+ 104:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
+ 108:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
+ 10c:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
+ 110:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
+ 114:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
+ 118:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
+ 11c:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
+ 120:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
+ 124:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
+ 128:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
+ 12c:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
+ 130:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
+ 134:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
+ 138:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
+ 13c:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
+ 140:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
+ 144:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
+ 148:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
+ 14c:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
+ 150:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
+ 154:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
+ 158:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
+ 15c:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
+ 160:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
+ 164:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
+ 168:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
+ 16c:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
+ 170:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
+ 174:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
+ 178:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
+ 17c:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
+ 180:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
+ 184:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
+ 188:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
+ 18c:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
+ 190:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
+ 194:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
+ 198:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
+ 19c:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
+ 1a0:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
+ 1a4:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
+ 1a8:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
+ 1ac:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
+ 1b0:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
+ 1b4:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
+ 1b8:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
+ 1bc:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
+ 1c0:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
+ 1c4:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
+ 1c8:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
+ 1cc:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
+ 1d0:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
+ 1d4:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
+ 1d8:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
+ 1dc:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
+ 1e0:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
+ 1e4:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
+ 1e8:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
+ 1ec:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
+ 1f0:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
+
+000001f4 <__ctors_end>:
+ 1f4:	11 24       	eor	r1, r1
+ 1f6:	1f be       	out	0x3f, r1	; 63
+ 1f8:	cf ef       	ldi	r28, 0xFF	; 255
+ 1fa:	df e3       	ldi	r29, 0x3F	; 63
+ 1fc:	de bf       	out	0x3e, r29	; 62
+ 1fe:	cd bf       	out	0x3d, r28	; 61
+ 200:	00 e0       	ldi	r16, 0x00	; 0
+ 202:	0c bf       	out	0x3c, r16	; 60
+ 204:	18 be       	out	0x38, r1	; 56
+ 206:	19 be       	out	0x39, r1	; 57
+ 208:	1a be       	out	0x3a, r1	; 58
+ 20a:	1b be       	out	0x3b, r1	; 59
+
+0000020c <__do_copy_data>:
+ 20c:	10 e2       	ldi	r17, 0x20	; 32
+ 20e:	a0 e0       	ldi	r26, 0x00	; 0
+ 210:	b0 e2       	ldi	r27, 0x20	; 32
+ 212:	e6 e6       	ldi	r30, 0x66	; 102
+ 214:	f4 e0       	ldi	r31, 0x04	; 4
+ 216:	00 e0       	ldi	r16, 0x00	; 0
+ 218:	0b bf       	out	0x3b, r16	; 59
+ 21a:	02 c0       	rjmp	.+4      	; 0x220 <__do_copy_data+0x14>
+ 21c:	07 90       	elpm	r0, Z+
+ 21e:	0d 92       	st	X+, r0
+ 220:	a8 30       	cpi	r26, 0x08	; 8
+ 222:	b1 07       	cpc	r27, r17
+ 224:	d9 f7       	brne	.-10     	; 0x21c <__do_copy_data+0x10>
+ 226:	1b be       	out	0x3b, r1	; 59
+
+00000228 <__do_clear_bss>:
+ 228:	20 e2       	ldi	r18, 0x20	; 32
+ 22a:	a8 e0       	ldi	r26, 0x08	; 8
+ 22c:	b0 e2       	ldi	r27, 0x20	; 32
+ 22e:	01 c0       	rjmp	.+2      	; 0x232 <.do_clear_bss_start>
+
+00000230 <.do_clear_bss_loop>:
+ 230:	1d 92       	st	X+, r1
+
+00000232 <.do_clear_bss_start>:
+ 232:	a5 31       	cpi	r26, 0x15	; 21
+ 234:	b2 07       	cpc	r27, r18
+ 236:	e1 f7       	brne	.-8      	; 0x230 <.do_clear_bss_loop>
+ 238:	0e 94 08 02 	call	0x410	; 0x410 <main>
+ 23c:	0c 94 31 02 	jmp	0x462	; 0x462 <_exit>
+
+00000240 <__bad_interrupt>:
+ 240:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
+
+00000244 <SPI_MasterInit>:
+                    bool lsbFirst,
+                    SPI_MODE_t mode,
+                    SPI_INTLVL_t intLevel,
+                    bool clk2x,
+                    SPI_PRESCALER_t clockDivision)
+{
+ 244:	af 92       	push	r10
+ 246:	cf 92       	push	r12
+ 248:	ef 92       	push	r14
+ 24a:	0f 93       	push	r16
+ 24c:	fc 01       	movw	r30, r24
+	spi->module         = module;
+ 24e:	60 83       	st	Z, r22
+ 250:	71 83       	std	Z+1, r23	; 0x01
+	spi->port           = port;
+ 252:	42 83       	std	Z+2, r20	; 0x02
+ 254:	53 83       	std	Z+3, r21	; 0x03
+	spi->interrupted    = false;
+ 256:	14 82       	std	Z+4, r1	; 0x04
+
+	spi->module->CTRL   = clockDivision |                  /* SPI prescaler. */
+ 258:	cc 20       	and	r12, r12
+ 25a:	11 f0       	breq	.+4      	; 0x260 <SPI_MasterInit+0x1c>
+ 25c:	90 e8       	ldi	r25, 0x80	; 128
+ 25e:	01 c0       	rjmp	.+2      	; 0x262 <SPI_MasterInit+0x1e>
+ 260:	90 e0       	ldi	r25, 0x00	; 0
+ 262:	22 23       	and	r18, r18
+ 264:	11 f0       	breq	.+4      	; 0x26a <SPI_MasterInit+0x26>
+ 266:	80 e2       	ldi	r24, 0x20	; 32
+ 268:	01 c0       	rjmp	.+2      	; 0x26c <SPI_MasterInit+0x28>
+ 26a:	80 e0       	ldi	r24, 0x00	; 0
+ 26c:	00 65       	ori	r16, 0x50	; 80
+ 26e:	0a 29       	or	r16, r10
+ 270:	09 2b       	or	r16, r25
+ 272:	08 2b       	or	r16, r24
+ 274:	db 01       	movw	r26, r22
+ 276:	0c 93       	st	X, r16
+	                      (lsbFirst ? SPI_DORD_bm  : 0) |  /* Data order. */
+	                      SPI_MASTER_bm |                  /* SPI master. */
+	                      mode;                            /* SPI mode. */
+
+	/* Interrupt level. */
+	spi->module->INTCTRL = intLevel;
+ 278:	a0 81       	ld	r26, Z
+ 27a:	b1 81       	ldd	r27, Z+1	; 0x01
+ 27c:	11 96       	adiw	r26, 0x01	; 1
+ 27e:	ec 92       	st	X, r14
+
+	/* No assigned data packet. */
+	spi->dataPacket = NULL;
+ 280:	15 82       	std	Z+5, r1	; 0x05
+ 282:	16 82       	std	Z+6, r1	; 0x06
+
+ 	/* MOSI and SCK as output. */
+	spi->port->DIRSET  = SPI_MOSI_bm | SPI_SCK_bm;
+ 284:	02 80       	ldd	r0, Z+2	; 0x02
+ 286:	f3 81       	ldd	r31, Z+3	; 0x03
+ 288:	e0 2d       	mov	r30, r0
+ 28a:	80 ea       	ldi	r24, 0xA0	; 160
+ 28c:	81 83       	std	Z+1, r24	; 0x01
+}
+ 28e:	0f 91       	pop	r16
+ 290:	ef 90       	pop	r14
+ 292:	cf 90       	pop	r12
+ 294:	af 90       	pop	r10
+ 296:	08 95       	ret
+
+00000298 <spi_set_up>:
+	PF6	MISO
+	PF7	SCK
+*/
+	
+void spi_set_up()
+{
+ 298:	af 92       	push	r10
+ 29a:	cf 92       	push	r12
+ 29c:	ef 92       	push	r14
+ 29e:	0f 93       	push	r16
+	
+	/* Init SS pin as output with wired AND and pull-up. */
+	PORTF.DIRSET = PIN4_bm;
+ 2a0:	e0 ea       	ldi	r30, 0xA0	; 160
+ 2a2:	f6 e0       	ldi	r31, 0x06	; 6
+ 2a4:	80 e1       	ldi	r24, 0x10	; 16
+ 2a6:	81 83       	std	Z+1, r24	; 0x01
+	PORTF.PIN4CTRL = PORT_OPC_WIREDANDPULL_gc;
+ 2a8:	98 e3       	ldi	r25, 0x38	; 56
+ 2aa:	94 8b       	std	Z+20, r25	; 0x14
+
+	/* Set SS output to high. (No slave addressed). */
+	PORTF.OUTSET = PIN4_bm;
+ 2ac:	85 83       	std	Z+5, r24	; 0x05
+
+	/* Initialize SPI master on port C. */
+	SPI_MasterInit(&spiMasterF,
+ 2ae:	0f 2e       	mov	r0, r31
+ 2b0:	f3 e0       	ldi	r31, 0x03	; 3
+ 2b2:	af 2e       	mov	r10, r31
+ 2b4:	f0 2d       	mov	r31, r0
+ 2b6:	c1 2c       	mov	r12, r1
+ 2b8:	e1 2c       	mov	r14, r1
+ 2ba:	00 e0       	ldi	r16, 0x00	; 0
+ 2bc:	20 e0       	ldi	r18, 0x00	; 0
+ 2be:	40 ea       	ldi	r20, 0xA0	; 160
+ 2c0:	56 e0       	ldi	r21, 0x06	; 6
+ 2c2:	60 ec       	ldi	r22, 0xC0	; 192
+ 2c4:	7b e0       	ldi	r23, 0x0B	; 11
+ 2c6:	88 e0       	ldi	r24, 0x08	; 8
+ 2c8:	90 e2       	ldi	r25, 0x20	; 32
+ 2ca:	0e 94 22 01 	call	0x244	; 0x244 <SPI_MasterInit>
+		//SPI_MASTER_bm          |  /* SPI master. */
+		//SPI_MODE_3_gc;            /* SPI mode. */
+//
+	   
+
+}
+ 2ce:	0f 91       	pop	r16
+ 2d0:	ef 90       	pop	r14
+ 2d2:	cf 90       	pop	r12
+ 2d4:	af 90       	pop	r10
+ 2d6:	08 95       	ret
+
+000002d8 <spi_write_read>:
+
+
+// SPI write read function
+unsigned char spi_write_read(unsigned char spi_data)
+{
+	SPIF.DATA = spi_data;
+ 2d8:	e0 ec       	ldi	r30, 0xC0	; 192
+ 2da:	fb e0       	ldi	r31, 0x0B	; 11
+ 2dc:	83 83       	std	Z+3, r24	; 0x03
+	while(!(SPIF.STATUS & SPI_IF_bm)); // Wait until the data transfer is complete
+ 2de:	82 81       	ldd	r24, Z+2	; 0x02
+ 2e0:	88 23       	and	r24, r24
+ 2e2:	ec f7       	brge	.-6      	; 0x2de <spi_write_read+0x6>
+	return SPIF.DATA;
+ 2e4:	e0 ec       	ldi	r30, 0xC0	; 192
+ 2e6:	fb e0       	ldi	r31, 0x0B	; 11
+ 2e8:	83 81       	ldd	r24, Z+3	; 0x03
+}
+ 2ea:	08 95       	ret
+
+000002ec <ReadUM6DataReg>:
+
+
+void ReadUM6DataReg()
+{
+ 2ec:	ff 92       	push	r15
+ 2ee:	0f 93       	push	r16
+ 2f0:	1f 93       	push	r17
+ 2f2:	cf 93       	push	r28
+ 2f4:	df 93       	push	r29
+	
+	
+	PORTF.OUTCLR = PIN4_bm;	
+ 2f6:	00 ea       	ldi	r16, 0xA0	; 160
+ 2f8:	16 e0       	ldi	r17, 0x06	; 6
+ 2fa:	68 94       	set
+ 2fc:	ff 24       	eor	r15, r15
+ 2fe:	f4 f8       	bld	r15, 4
+ 300:	f8 01       	movw	r30, r16
+ 302:	f6 82       	std	Z+6, r15	; 0x06
+
+	uint8_t dummy_read;
+	
+	dummy_read = spi_write_read(0x00);
+ 304:	80 e0       	ldi	r24, 0x00	; 0
+ 306:	0e 94 6c 01 	call	0x2d8	; 0x2d8 <spi_write_read>
+	dummy_read = spi_write_read(0x63);
+ 30a:	83 e6       	ldi	r24, 0x63	; 99
+ 30c:	0e 94 6c 01 	call	0x2d8	; 0x2d8 <spi_write_read>
+
+	// MSB first
+	Upper16bitWord =(Upper16bitWord << 8 ) +  spi_write_read(0x00);
+ 310:	f0 91 0f 20 	lds	r31, 0x200F
+ 314:	df 2f       	mov	r29, r31
+ 316:	80 e0       	ldi	r24, 0x00	; 0
+ 318:	c8 2f       	mov	r28, r24
+ 31a:	0e 94 6c 01 	call	0x2d8	; 0x2d8 <spi_write_read>
+ 31e:	c8 0f       	add	r28, r24
+ 320:	d1 1d       	adc	r29, r1
+ 322:	c0 93 0f 20 	sts	0x200F, r28
+ 326:	d0 93 10 20 	sts	0x2010, r29
+	Upper16bitWord =(Upper16bitWord << 8 ) +  spi_write_read(0x00);
+ 32a:	80 e0       	ldi	r24, 0x00	; 0
+ 32c:	0e 94 6c 01 	call	0x2d8	; 0x2d8 <spi_write_read>
+ 330:	dc 2f       	mov	r29, r28
+ 332:	cc 27       	eor	r28, r28
+ 334:	c8 0f       	add	r28, r24
+ 336:	d1 1d       	adc	r29, r1
+ 338:	c0 93 0f 20 	sts	0x200F, r28
+ 33c:	d0 93 10 20 	sts	0x2010, r29
+	Lower16bitWord =(Lower16bitWord << 8 ) +  spi_write_read(0x00);
+ 340:	e0 91 13 20 	lds	r30, 0x2013
+ 344:	de 2f       	mov	r29, r30
+ 346:	f0 e0       	ldi	r31, 0x00	; 0
+ 348:	cf 2f       	mov	r28, r31
+ 34a:	80 e0       	ldi	r24, 0x00	; 0
+ 34c:	0e 94 6c 01 	call	0x2d8	; 0x2d8 <spi_write_read>
+ 350:	c8 0f       	add	r28, r24
+ 352:	d1 1d       	adc	r29, r1
+ 354:	c0 93 13 20 	sts	0x2013, r28
+ 358:	d0 93 14 20 	sts	0x2014, r29
+	Lower16bitWord =(Lower16bitWord << 8 ) +  spi_write_read(0x00);
+ 35c:	80 e0       	ldi	r24, 0x00	; 0
+ 35e:	0e 94 6c 01 	call	0x2d8	; 0x2d8 <spi_write_read>
+
+	PORTF.OUTSET = PIN4_bm;	
+ 362:	f8 01       	movw	r30, r16
+ 364:	f5 82       	std	Z+5, r15	; 0x05
+	
+	//  convert form 2's complement
+	Upper16bitWord = (Upper16bitWord ^ 0xFFFF) + 1;
+ 366:	20 91 0f 20 	lds	r18, 0x200F
+ 36a:	30 91 10 20 	lds	r19, 0x2010
+ 36e:	31 95       	neg	r19
+ 370:	21 95       	neg	r18
+ 372:	31 09       	sbc	r19, r1
+ 374:	20 93 0f 20 	sts	0x200F, r18
+ 378:	30 93 10 20 	sts	0x2010, r19
+
+	// MSB first
+	Upper16bitWord =(Upper16bitWord << 8 ) +  spi_write_read(0x00);
+	Upper16bitWord =(Upper16bitWord << 8 ) +  spi_write_read(0x00);
+	Lower16bitWord =(Lower16bitWord << 8 ) +  spi_write_read(0x00);
+	Lower16bitWord =(Lower16bitWord << 8 ) +  spi_write_read(0x00);
+ 37c:	dc 2f       	mov	r29, r28
+ 37e:	cc 27       	eor	r28, r28
+ 380:	c8 0f       	add	r28, r24
+ 382:	d1 1d       	adc	r29, r1
+
+	PORTF.OUTSET = PIN4_bm;	
+	
+	//  convert form 2's complement
+	Upper16bitWord = (Upper16bitWord ^ 0xFFFF) + 1;
+	Lower16bitWord = (Lower16bitWord ^ 0xFFFF) + 1;
+ 384:	d1 95       	neg	r29
+ 386:	c1 95       	neg	r28
+ 388:	d1 09       	sbc	r29, r1
+ 38a:	c0 93 13 20 	sts	0x2013, r28
+ 38e:	d0 93 14 20 	sts	0x2014, r29
+	
+
+	
+	
+}
+ 392:	df 91       	pop	r29
+ 394:	cf 91       	pop	r28
+ 396:	1f 91       	pop	r17
+ 398:	0f 91       	pop	r16
+ 39a:	ff 90       	pop	r15
+ 39c:	08 95       	ret
+
+0000039e <put_USART_PC_char>:
+void put_USART_PC_char(uint8_t sendThis)
+{
+
+	do{
+
+	}while(!USART_IsTXDataRegisterEmpty(&XBEE_USART));
+ 39e:	e0 eb       	ldi	r30, 0xB0	; 176
+ 3a0:	f9 e0       	ldi	r31, 0x09	; 9
+ 3a2:	91 81       	ldd	r25, Z+1	; 0x01
+ 3a4:	95 ff       	sbrs	r25, 5
+ 3a6:	fd cf       	rjmp	.-6      	; 0x3a2 <put_USART_PC_char+0x4>
+	USART_PutChar(&XBEE_USART, sendThis);
+ 3a8:	80 93 b0 09 	sts	0x09B0, r24
+ 3ac:	08 95       	ret
+
+000003ae <sendData_int16_t>:
+
+		
+
+
+void sendData_int16_t(int16_t sendthis)
+{
+ 3ae:	cf 93       	push	r28
+ 3b0:	c8 2f       	mov	r28, r24
+	put_USART_PC_char( MASK_TOP_BYTE & (sendthis >> 8));
+ 3b2:	89 2f       	mov	r24, r25
+ 3b4:	0e 94 cf 01 	call	0x39e	; 0x39e <put_USART_PC_char>
+	put_USART_PC_char (MASK_TOP_BYTE & sendthis);
+ 3b8:	8c 2f       	mov	r24, r28
+ 3ba:	0e 94 cf 01 	call	0x39e	; 0x39e <put_USART_PC_char>
+}
+ 3be:	cf 91       	pop	r28
+ 3c0:	08 95       	ret
+
+000003c2 <init32MHzClock>:
+
+void init32MHzClock(void)
+{
+
+	//	Enable the 32 MHz internal RC oscillator.
+	OSC.CTRL|=OSC_RC32MEN_bm;
+ 3c2:	e0 e5       	ldi	r30, 0x50	; 80
+ 3c4:	f0 e0       	ldi	r31, 0x00	; 0
+ 3c6:	80 81       	ld	r24, Z
+ 3c8:	82 60       	ori	r24, 0x02	; 2
+ 3ca:	80 83       	st	Z, r24
+	//	The R32MRFY flag is set when the 32 MHz internal RC oscillator is stable
+	//	and ready to be used as the System Clock source.
+	while(!(OSC.STATUS &OSC_RC32MRDY_bm ));
+ 3cc:	81 81       	ldd	r24, Z+1	; 0x01
+ 3ce:	81 ff       	sbrs	r24, 1
+ 3d0:	fd cf       	rjmp	.-6      	; 0x3cc <init32MHzClock+0xa>
+	CCP=CCP_IOREG_gc;
+ 3d2:	88 ed       	ldi	r24, 0xD8	; 216
+ 3d4:	84 bf       	out	0x34, r24	; 52
+	//	Select the 32MHz RC oscillator for the system clock
+	CLK.CTRL = CLK_SCLKSEL_RC32M_gc;
+ 3d6:	81 e0       	ldi	r24, 0x01	; 1
+ 3d8:	80 93 40 00 	sts	0x0040, r24
+ 3dc:	08 95       	ret
+
+000003de <initUART>:
+void initUART()
+{
+	
+	//  XBEE on USARTD1
+	/* PD6 (RXD1) input*/
+	PORTD.DIRCLR = PIN6_bm;
+ 3de:	e0 e6       	ldi	r30, 0x60	; 96
+ 3e0:	f6 e0       	ldi	r31, 0x06	; 6
+ 3e2:	90 e4       	ldi	r25, 0x40	; 64
+ 3e4:	92 83       	std	Z+2, r25	; 0x02
+	/* PD7 (TXD1) as output. */
+	PORTD.DIRSET = PIN7_bm;
+ 3e6:	80 e8       	ldi	r24, 0x80	; 128
+ 3e8:	81 83       	std	Z+1, r24	; 0x01
+	
+	
+	//  IMU on USARTC1	
+	/* PC6 (RXD1) input*/
+	PORTC.DIRCLR = PIN6_bm;
+ 3ea:	e0 e4       	ldi	r30, 0x40	; 64
+ 3ec:	f6 e0       	ldi	r31, 0x06	; 6
+ 3ee:	92 83       	std	Z+2, r25	; 0x02
+	/* PD7 (TXD1) as output. */
+	PORTC.DIRSET = PIN7_bm;
+ 3f0:	81 83       	std	Z+1, r24	; 0x01
+	
+	USART_Format_Set(&XBEE_USART, USART_CHSIZE_8BIT_gc, USART_PMODE_DISABLED_gc, true);
+ 3f2:	e0 eb       	ldi	r30, 0xB0	; 176
+ 3f4:	f9 e0       	ldi	r31, 0x09	; 9
+ 3f6:	8b e0       	ldi	r24, 0x0B	; 11
+ 3f8:	85 83       	std	Z+5, r24	; 0x05
+	USART_Baudrate_Set(&XBEE_USART, 1047 , -6);			// set for 32MHZ and 115200
+ 3fa:	87 e1       	ldi	r24, 0x17	; 23
+ 3fc:	86 83       	std	Z+6, r24	; 0x06
+ 3fe:	84 ea       	ldi	r24, 0xA4	; 164
+ 400:	87 83       	std	Z+7, r24	; 0x07
+	/* Enable both RX and TX. */
+	USART_Rx_Enable(&XBEE_USART);
+ 402:	84 81       	ldd	r24, Z+4	; 0x04
+ 404:	80 61       	ori	r24, 0x10	; 16
+ 406:	84 83       	std	Z+4, r24	; 0x04
+	USART_Tx_Enable(&XBEE_USART);
+ 408:	84 81       	ldd	r24, Z+4	; 0x04
+ 40a:	88 60       	ori	r24, 0x08	; 8
+ 40c:	84 83       	std	Z+4, r24	; 0x04
+ 40e:	08 95       	ret
+
+00000410 <main>:
+
+
+int main(void)
+{
+
+	PORTA.DIRSET = 0xFF;			//  LEDS
+ 410:	8f ef       	ldi	r24, 0xFF	; 255
+ 412:	e0 e0       	ldi	r30, 0x00	; 0
+ 414:	f6 e0       	ldi	r31, 0x06	; 6
+ 416:	81 83       	std	Z+1, r24	; 0x01
+	init32MHzClock();
+ 418:	0e 94 e1 01 	call	0x3c2	; 0x3c2 <init32MHzClock>
+	initUART();
+ 41c:	0e 94 ef 01 	call	0x3de	; 0x3de <initUART>
+    spi_set_up();
+ 420:	0e 94 4c 01 	call	0x298	; 0x298 <spi_set_up>
+	
+
+		while(1)
+		{
+		 int16counter++;
+ 424:	80 91 11 20 	lds	r24, 0x2011
+ 428:	90 91 12 20 	lds	r25, 0x2012
+ 42c:	01 96       	adiw	r24, 0x01	; 1
+ 42e:	80 93 11 20 	sts	0x2011, r24
+ 432:	90 93 12 20 	sts	0x2012, r25
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+ 436:	2f ef       	ldi	r18, 0xFF	; 255
+ 438:	87 e8       	ldi	r24, 0x87	; 135
+ 43a:	93 e1       	ldi	r25, 0x13	; 19
+ 43c:	21 50       	subi	r18, 0x01	; 1
+ 43e:	80 40       	sbci	r24, 0x00	; 0
+ 440:	90 40       	sbci	r25, 0x00	; 0
+ 442:	e1 f7       	brne	.-8      	; 0x43c <main+0x2c>
+ 444:	00 c0       	rjmp	.+0      	; 0x446 <main+0x36>
+ 446:	00 00       	nop
+		_delay_ms(200);
+		//_delay_ms(200);
+		 int16counter = 0;
+ 448:	10 92 11 20 	sts	0x2011, r1
+ 44c:	10 92 12 20 	sts	0x2012, r1
+		 //spi_master_get_32bit_reg(&spiMasterF,UM6_EULER_PSI);
+		 ReadUM6DataReg();
+ 450:	0e 94 76 01 	call	0x2ec	; 0x2ec <ReadUM6DataReg>
+		//sendData_int16_t(0xffff);
+		 sendData_int16_t(Upper16bitWord);
+ 454:	80 91 0f 20 	lds	r24, 0x200F
+ 458:	90 91 10 20 	lds	r25, 0x2010
+ 45c:	0e 94 d7 01 	call	0x3ae	; 0x3ae <sendData_int16_t>
+ 460:	e1 cf       	rjmp	.-62     	; 0x424 <main+0x14>
+
+00000462 <_exit>:
+ 462:	f8 94       	cli
+
+00000464 <__stop_program>:
+ 464:	ff cf       	rjmp	.-2      	; 0x464 <__stop_program>
