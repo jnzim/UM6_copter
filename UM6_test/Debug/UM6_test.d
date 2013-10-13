@@ -19,7 +19,11 @@ UM6_test.d UM6_test.o: .././UM6_test.c \
  c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.2.876\avr8-gnu-toolchain\bin\../lib/gcc/avr/4.7.2/../../../../avr/include/util/delay.h \
  c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.2.876\avr8-gnu-toolchain\bin\../lib/gcc/avr/4.7.2/../../../../avr/include/util/delay_basic.h \
  c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.2.876\avr8-gnu-toolchain\bin\../lib/gcc/avr/4.7.2/../../../../avr/include/math.h \
- .././communication.c .././spi_driver.h .././spi_driver.c
+ .././communication.c .././spi_driver.h .././spi_driver.c \
+ .././tc_driver.h .././tc_driver.c .././TC_driver.h .././myUtilities.h \
+ c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.2.876\avr8-gnu-toolchain\bin\../lib/gcc/avr/4.7.2/../../../../avr/include/errno.h \
+ c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.2.876\avr8-gnu-toolchain\bin\../lib/gcc/avr/4.7.2/../../../../avr/include/ctype.h \
+ .././PWM.h .././dma_driver.h .././dma_driver.c .././PIDcontrol.h
 
 c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.2.876\avr8-gnu-toolchain\bin\../lib/gcc/avr/4.7.2/../../../../avr/include/avr/io.h:
 
@@ -68,3 +72,23 @@ c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.2.876\avr8-
 .././spi_driver.h:
 
 .././spi_driver.c:
+
+.././tc_driver.h:
+
+.././tc_driver.c:
+
+.././TC_driver.h:
+
+.././myUtilities.h:
+
+c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.2.876\avr8-gnu-toolchain\bin\../lib/gcc/avr/4.7.2/../../../../avr/include/errno.h:
+
+c:\program\ files\ (x86)\atmel\atmel\ toolchain\avr8\ gcc\native\3.4.2.876\avr8-gnu-toolchain\bin\../lib/gcc/avr/4.7.2/../../../../avr/include/ctype.h:
+
+.././PWM.h:
+
+.././dma_driver.h:
+
+.././dma_driver.c:
+
+.././PIDcontrol.h:

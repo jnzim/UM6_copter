@@ -4,24 +4,45 @@
 #include "usart_driver.h"
 #include "avr_compiler.h"
 #include "communication.c"
+#include "tc_driver.h"
+#include "tc_driver.c"
+#include "myUtilities.h"
+#include "PWM.h"
+#include "dma_driver.h"
+#include "dma_driver.c"
+#include "PIDcontrol.h"
+
 
 
 
 /*! Define that selects the UASRT used in example. */
 #define F_CPU 					32000000UL
 #define XBEE_USART				USARTD1
-
-
-
+#define	IMU_USART				USARTC1
+#define DMA_RX_Channel			&DMA.CH1
 #define MASK_TOP_BYTE			0x00FF
+#define NUM_CMD_BYTES		    10
+#define SCALE_THROTTLE			4
+
 
 
 void init32MHzClock(void);
 void initUART(void);
 void put_USART_PC_char(uint8_t);
 void sendData_int16_t(int16_t);
+void initPWM(void);
+void getCommand(void);
+void Setup_DMA_ReceiveChannel( void );
+void intPID_gains(void);
+void Get_DMA_DATA( volatile DMA_CH_t * channel );
+
 
 int16_t int16counter;
+PID_data_t rollAxis,yawAxis,pitchAxis,throttleAxis;
+uint16_t sendDataLoopCounter = 0;
+int commandTicker = 0;
+//  buffer for DMA data
+static char Rx_Buf[NUM_CMD_BYTES];
 
 
 
@@ -32,37 +53,112 @@ int main(void)
 	PORTA.DIRSET = 0xFF;			//  LEDS
 	init32MHzClock();
 	initUART();
-    spi_set_up();
+    spi_set_up();intPID_gains();
+    initPWM();
+    init32MHzClock();
+    initUART();
+    //Initialize DMAC
+    DMA_Enable();
+    Setup_DMA_ReceiveChannel();
+    //The receiving DMA channel will wait for characters
+    //and write them to Rx_Buf
+    DMA_EnableChannel(DMA_RX_Channel);
 	
 
 		while(1)
 		{
-		 int16counter++;
-		_delay_ms(200);
-		//_delay_ms(200);
-		 int16counter = 0;
-		 //spi_master_get_32bit_reg(&spiMasterF,UM6_EULER_PSI);
-		 ReadUM6DataReg();
-		//sendData_int16_t(0xffff);
-		 sendData_int16_t(Upper16bitWord);
-		 //sendData_int16_t(Lower16bitWord);
 		
-		//put_USART_PC_char(byte1);
-		//put_USART_PC_char(byte2);
-		//put_USART_PC_char(byte3);
-		//put_USART_PC_char(byte4);
+			_delay_ms(5);
+
+	
+			UpdateEulerAngles();
+
+			PORTA.OUTTGL = 0xFF;			//  LEDS
+			Get_DMA_DATA(DMA_RX_Channel);
+
+
+			//CalculateRate(&rollAxis);
+			//pid_attitude(&rollAxis);
+			//pid_rate(&rollAxis);
+			int16counter++;
+			if (int16counter >= 15)
+			{
+					sendUM6_Data();
+					int16counter = 0;
+			}
+			
 		}		
 				
-		
-		
-		while(1)
-		{}		 
+	 
 }	
+
+
+//250 mSec * 1000mSec / 1 Sec * 1/32,000,000
+void getCommand()
+{
+
+	int i;
+	
+	if (Rx_Buf[0] == 0xFF && Rx_Buf[1] == 0xFD)
+	{
+		i =	2;
+
+		throttleAxis.attitude_command =(throttleAxis.attitude_command << 8 ) + Rx_Buf[i++];
+		throttleAxis.attitude_command =(throttleAxis.attitude_command << 8 ) + Rx_Buf[i++];
+
+		//yawAxis.command = (yawAxis.command << 8 ) + Rx_Buf[i++];
+		//yawAxis.command =(yawAxis.command << 8 ) + Rx_Buf[i++];
+
+		//pitchAxis.command = (pitchAxis.command  << 8 ) + Rx_Buf[i++];
+		//pitchAxis.command  =(pitchAxis.command  << 8 ) + Rx_Buf[i++];
+		
+		yawAxis.attitude_command = (yawAxis.attitude_command << 8 ) + Rx_Buf[i++];
+		yawAxis.attitude_command =(yawAxis.attitude_command << 8 ) + Rx_Buf[i++];
+		
+		pitchAxis.attitude_command = (pitchAxis.attitude_command << 8 ) + Rx_Buf[i++];
+		pitchAxis.attitude_command =(pitchAxis.attitude_command << 8 ) + Rx_Buf[i++];
+			
+		rollAxis.attitude_command = (rollAxis.attitude_command << 8 ) + Rx_Buf[i++];
+		rollAxis.attitude_command =(rollAxis.attitude_command << 8 ) + Rx_Buf[i++];
+		
+		//squareWave();
+		//rollAxis.Kp_rate = (rollAxis.Kp_rate  << 8 ) + Rx_Buf[i++];
+		//rollAxis.Kp_rate  =(rollAxis.Kp_rate  << 8 ) + Rx_Buf[i++];
+		//
+		//rollAxis.Ki_rate = (rollAxis.Ki_rate << 8 ) + Rx_Buf[i++];
+		//rollAxis.Ki_rate =(rollAxis.Ki_rate << 8 ) + Rx_Buf[i++];
+		//
+		//rollAxis.Kd_rate = (rollAxis.Kd_rate << 8 ) + Rx_Buf[i++];
+		//rollAxis.Kd_rate =(rollAxis.Kd_rate << 8 ) + Rx_Buf[i++];
+//
+		//rollAxis.Kp = (rollAxis.Kp  << 8 ) + Rx_Buf[i++];
+		//rollAxis.Kp  =(rollAxis.Kp  << 8 ) + Rx_Buf[i++];
+		//
+		//rollAxis.Ki = (rollAxis.Ki << 8 ) + Rx_Buf[i++];
+		//rollAxis.Ki =(rollAxis.Ki << 8 ) + Rx_Buf[i++];
+		//
+		//rollAxis.Kd = (rollAxis.Kd << 8 ) + Rx_Buf[i++];
+		//rollAxis.Kd =(rollAxis.Kd << 8 ) + Rx_Buf[i++];
+		
+		
+	}
+	else
+	{
+		//  if we didn't start with the frame header, something isn't right,  rest the DMA channel
+		//  would be nice to know why this happens,  maybe we are reading the buffer will the DMA is trying to write to it
+		//PORTA.OUTTGL = 0x00000001;
+		//DMA_Disable();
+		//DMA_Enable();
+		//Setup_DMA_ReceiveChannel();
+		//DMA_EnableChannel(DMA_RX_Channel);
+	}
+}
+
+
 		
 
-		
 
-
+//send 16 bit data on USART, 2 bytes
 void sendData_int16_t(int16_t sendthis)
 {
 	put_USART_PC_char( MASK_TOP_BYTE & (sendthis >> 8));
@@ -70,8 +166,42 @@ void sendData_int16_t(int16_t sendthis)
 }
 
 
+// send 32 bit data on USART, 4 bytes
+void sendData_int32_t(int32_t sendthis)
+{
+	put_USART_PC_char( MASK_TOP_BYTE & (sendthis >> 24));
+	put_USART_PC_char( MASK_TOP_BYTE & (sendthis >> 16));
+	put_USART_PC_char( MASK_TOP_BYTE & (sendthis >> 8));
+	put_USART_PC_char (MASK_TOP_BYTE & sendthis);
+}
+
+void sendUM6_Data()
+{
+	sendData_int16_t(0xFFFE);
+	//sendData_int16_t(0x0404);
+	sendData_int16_t(UM6_EulerYaw);
+	sendData_int16_t(UM6_EulerPitch);
+	sendData_int16_t(UM6_EulerRoll);
+	
+}
 
 
+
+void Get_DMA_DATA( volatile DMA_CH_t * channel )
+{
+	uint8_t flagMask;
+	uint8_t relevantFlags;
+
+	flagMask = DMA_CH_ERRIF_bm | DMA_CH_TRNIF_bm;
+	relevantFlags = channel->CTRLB & flagMask;
+
+	if (relevantFlags != 0x00)
+	{
+		getCommand();
+		channel->CTRLB = flagMask;
+	}
+
+}
 
 
 
@@ -125,6 +255,9 @@ void init32MHzClock(void)
 	
 }
 
+//  set up the serial port for sending data back and forth to the PC
+// via the XBEE radio.
+//  8 bits, no parity, 2 stop bits
 void initUART()
 {
 	
@@ -151,6 +284,26 @@ void initUART()
 }
 
 
+void intPID_gains()
+{
+
+	yawAxis.Kp = 0;
+	yawAxis.Ki = 0;
+	yawAxis.Kd = 0;
+	
+	pitchAxis.Kp = 100;
+	pitchAxis.Ki = 100;
+	pitchAxis.Kd = 100;
+	
+	rollAxis.Kp = 0;
+	rollAxis.Ki =0;
+	rollAxis.Kd =0;
+	
+	rollAxis.Kp_rate = 100;
+	rollAxis.Ki_rate =100;
+	rollAxis.Kd_rate =100;
+}
+
 
 /*! \brief This function configures the necessary registers for a block transfer.
  *
@@ -174,6 +327,16 @@ void initUART()
  */
 
 
-
+void Setup_DMA_ReceiveChannel( void )
+{
+	DMA_SetupBlock(  DMA_RX_Channel,(void *) &USARTD1.DATA, DMA_CH_SRCRELOAD_NONE_gc,  DMA_CH_SRCDIR_FIXED_gc, Rx_Buf,
+	DMA_CH_DESTRELOAD_BLOCK_gc, DMA_CH_DESTDIR_INC_gc, NUM_CMD_BYTES, DMA_CH_BURSTLEN_1BYTE_gc,  0x00, true);
+	
+	DMA_EnableSingleShot(DMA_RX_Channel);
+	
+	// USART Trigger source, Receive complete
+	DMA_SetTriggerSource(DMA_RX_Channel, DMA_CH_TRIGSRC_USARTD1_RXC_gc);
+	
+}
 
 
