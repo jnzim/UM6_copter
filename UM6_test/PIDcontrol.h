@@ -89,19 +89,20 @@ void pid_attitude(PID_data_t * pid_data)
 	// still rolls over at small angles if gain is large
 	//(360*105)/100
 	//p_term = Limit_value_signed(((pid_data->error  *  pid_data->Kp)/100), pid_data->error);
-	p_term = Limit_value_signed((pid_data->attitude_error  *  pid_data->Kp), pid_data->attitude_error)/100;	
+	p_term = (pid_data->attitude_error  *  pid_data->Kp);	
 	
 	//calculate integral term
 	//i_term = Limit_value_signed((pid_data->total_error  * pid_data->Ki)/100);
 	
 	//calculate derivative  term
-	d_term = (pid_data->rate * pid_data->Kd)/10;
+	d_term = (pid_data->rate * pid_data->Kd);
 	
 	// calculate the pid output
-	pid_total = Limit_value_signed((p_term + d_term), pid_data->attitude_error);
+	pid_total = p_term + d_term;
 	
 	
 	pid_data->attitude_pid_out =  d_term + p_term;
+
 	
 }
 

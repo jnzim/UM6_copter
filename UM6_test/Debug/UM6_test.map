@@ -12,10 +12,10 @@ c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.876/avr8-gnu-
                               UM6_test.o (__do_copy_data)
 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.876/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avrxmega7\libgcc.a(_clear_bss.o)
                               UM6_test.o (__do_clear_bss)
-c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.876/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avrxmega7\libgcc.a(_umulhisi3.o)
-                              UM6_test.o (__umulhisi3)
 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.876/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avrxmega7\libgcc.a(_muluhisi3.o)
                               c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.876/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avrxmega7\libgcc.a(_mulsi3.o) (__muluhisi3)
+c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.876/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avrxmega7\libgcc.a(_umulhisi3.o)
+                              c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.876/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avrxmega7\libgcc.a(_muluhisi3.o) (__umulhisi3)
 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.876/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avrxmega7\libc.a(errno.o)
                               UM6_test.o (errno)
 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.876/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avrxmega7\libc.a(isalpha.o)
@@ -50,6 +50,12 @@ Discarded input sections
 
  .bss           0x00000000        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.876/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avrxmega7/crtx128a1.o
  .text          0x00000000        0x0 UM6_test.o
+ .text.pid_rate
+                0x00000000       0xb0 UM6_test.o
+ .text.CalculateRate
+                0x00000000       0x24 UM6_test.o
+ .text.Limit_value_signed
+                0x00000000       0x30 UM6_test.o
  .text.SPI_SlaveInit
                 0x00000000       0x36 UM6_test.o
  .text.SPI_MasterCreateDataPacket
@@ -72,6 +78,14 @@ Discarded input sections
                 0x00000000        0xa UM6_test.o
  .text.spi_master_get_32bit_reg
                 0x00000000       0xd6 UM6_test.o
+ .text.ZeroGyros
+                0x00000000        0xe UM6_test.o
+ .text.ZeroAccelerometers
+                0x00000000        0xe UM6_test.o
+ .text.ZeroMagnetometer
+                0x00000000        0xe UM6_test.o
+ .text.ResetUM6_ToFactory
+                0x00000000        0xe UM6_test.o
  .text.TC1_ConfigClockSource
                 0x00000000        0xc UM6_test.o
  .text.TC0_ConfigWGM
@@ -118,7 +132,6 @@ Discarded input sections
                 0x00000000      0x2ac UM6_test.o
  .text.my_map_int
                 0x00000000       0x24 UM6_test.o
- .text.doPWM    0x00000000       0x2c UM6_test.o
  .text.DMA_ConfigDoubleBuffering
                 0x00000000        0xe UM6_test.o
  .text.DMA_SetPriority
@@ -145,14 +158,6 @@ Discarded input sections
                 0x00000000        0xa UM6_test.o
  .text.DMA_StartTransfer
                 0x00000000        0xa UM6_test.o
- .text.pid_rate
-                0x00000000       0xb0 UM6_test.o
- .text.CalculateRate
-                0x00000000       0x24 UM6_test.o
- .text.Limit_value_signed
-                0x00000000       0x30 UM6_test.o
- .text.pid_attitude
-                0x00000000       0x98 UM6_test.o
  .text.get_XBEE_USART_char
                 0x00000000       0x26 UM6_test.o
  .text.sendData_int32_t
@@ -235,17 +240,6 @@ Discarded input sections
                 0x00000000        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.876/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avrxmega7\libgcc.a(_clear_bss.o)
  .text.libgcc.fmul
                 0x00000000        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.876/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avrxmega7\libgcc.a(_clear_bss.o)
- .text          0x00000000        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.876/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avrxmega7\libgcc.a(_umulhisi3.o)
- .bss           0x00000000        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.876/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avrxmega7\libgcc.a(_umulhisi3.o)
- .text.libgcc.div
-                0x00000000        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.876/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avrxmega7\libgcc.a(_umulhisi3.o)
- .text.libgcc   0x00000000        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.876/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avrxmega7\libgcc.a(_umulhisi3.o)
- .text.libgcc.prologue
-                0x00000000        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.876/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avrxmega7\libgcc.a(_umulhisi3.o)
- .text.libgcc.builtins
-                0x00000000        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.876/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avrxmega7\libgcc.a(_umulhisi3.o)
- .text.libgcc.fmul
-                0x00000000        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.876/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avrxmega7\libgcc.a(_umulhisi3.o)
  .text          0x00000000        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.876/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avrxmega7\libgcc.a(_muluhisi3.o)
  .bss           0x00000000        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.876/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avrxmega7\libgcc.a(_muluhisi3.o)
  .text.libgcc.mul
@@ -259,6 +253,19 @@ Discarded input sections
                 0x00000000        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.876/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avrxmega7\libgcc.a(_muluhisi3.o)
  .text.libgcc.fmul
                 0x00000000        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.876/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avrxmega7\libgcc.a(_muluhisi3.o)
+ .text          0x00000000        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.876/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avrxmega7\libgcc.a(_umulhisi3.o)
+ .bss           0x00000000        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.876/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avrxmega7\libgcc.a(_umulhisi3.o)
+ .text.libgcc.mul
+                0x00000000       0x18 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.876/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avrxmega7\libgcc.a(_umulhisi3.o)
+ .text.libgcc.div
+                0x00000000        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.876/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avrxmega7\libgcc.a(_umulhisi3.o)
+ .text.libgcc   0x00000000        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.876/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avrxmega7\libgcc.a(_umulhisi3.o)
+ .text.libgcc.prologue
+                0x00000000        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.876/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avrxmega7\libgcc.a(_umulhisi3.o)
+ .text.libgcc.builtins
+                0x00000000        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.876/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avrxmega7\libgcc.a(_umulhisi3.o)
+ .text.libgcc.fmul
+                0x00000000        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.876/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avrxmega7\libgcc.a(_umulhisi3.o)
  .text          0x00000000        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.876/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avrxmega7\libc.a(errno.o)
  .bss           0x00000000        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.876/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avrxmega7\libc.a(errno.o)
  COMMON         0x00000000        0x2 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.876/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avrxmega7\libc.a(errno.o)
@@ -388,7 +395,7 @@ LOAD c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.876/avr8
 .rela.plt
  *(.rela.plt)
 
-.text           0x00000000      0x7ee
+.text           0x00000000      0x89c
  *(.vectors)
  .vectors       0x00000000      0x1f4 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.876/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avrxmega7/crtx128a1.o
                 0x00000000                __vector_default
@@ -571,72 +578,77 @@ LOAD c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.876/avr8
                 0x00000240                __vector_120
                 0x00000244                . = ALIGN (0x2)
  *(.text.*)
+ .text.pid_attitude
+                0x00000244       0x5c UM6_test.o
+                0x00000244                pid_attitude
  .text.SPI_MasterInit
-                0x00000244       0x54 UM6_test.o
-                0x00000244                SPI_MasterInit
+                0x000002a0       0x54 UM6_test.o
+                0x000002a0                SPI_MasterInit
  .text.spi_set_up
-                0x00000298       0x40 UM6_test.o
-                0x00000298                spi_set_up
+                0x000002f4       0x40 UM6_test.o
+                0x000002f4                spi_set_up
  .text.spi_write_read
-                0x000002d8       0x14 UM6_test.o
-                0x000002d8                spi_write_read
- .text.UpdateEulerAngles
-                0x000002ec      0x174 UM6_test.o
-                0x000002ec                UpdateEulerAngles
+                0x00000334       0x14 UM6_test.o
+                0x00000334                spi_write_read
  .text.TC0_ConfigClockSource
-                0x00000460        0xc UM6_test.o
-                0x00000460                TC0_ConfigClockSource
- .text.initPWM  0x0000046c       0x58 UM6_test.o
-                0x0000046c                initPWM
+                0x00000348        0xc UM6_test.o
+                0x00000348                TC0_ConfigClockSource
+ .text.initPWM  0x00000354       0x58 UM6_test.o
+                0x00000354                initPWM
+ .text.doPWM    0x000003ac       0x28 UM6_test.o
+                0x000003ac                doPWM
  .text.DMA_EnableChannel
-                0x000004c4        0xa UM6_test.o
-                0x000004c4                DMA_EnableChannel
+                0x000003d4        0xa UM6_test.o
+                0x000003d4                DMA_EnableChannel
  .text.DMA_SetupBlock
-                0x000004ce       0x5c UM6_test.o
-                0x000004ce                DMA_SetupBlock
+                0x000003de       0x5c UM6_test.o
+                0x000003de                DMA_SetupBlock
  .text.DMA_EnableSingleShot
-                0x0000052a        0xa UM6_test.o
-                0x0000052a                DMA_EnableSingleShot
+                0x0000043a        0xa UM6_test.o
+                0x0000043a                DMA_EnableSingleShot
  .text.DMA_SetTriggerSource
-                0x00000534        0x6 UM6_test.o
-                0x00000534                DMA_SetTriggerSource
+                0x00000444        0x6 UM6_test.o
+                0x00000444                DMA_SetTriggerSource
+ .text.SetPulseWidths
+                0x0000044a       0x5c UM6_test.o
+                0x0000044a                SetPulseWidths
  .text.getCommand
-                0x0000053a       0x96 UM6_test.o
-                0x0000053a                getCommand
+                0x000004a6       0xf6 UM6_test.o
+                0x000004a6                getCommand
+ .text.UpdateEulerAngles
+                0x0000059c       0xc8 UM6_test.o
+                0x0000059c                UpdateEulerAngles
  .text.Get_DMA_DATA
-                0x000005d0       0x1a UM6_test.o
-                0x000005d0                Get_DMA_DATA
+                0x00000664       0x1a UM6_test.o
+                0x00000664                Get_DMA_DATA
  .text.put_USART_PC_char
-                0x000005ea       0x10 UM6_test.o
-                0x000005ea                put_USART_PC_char
+                0x0000067e       0x10 UM6_test.o
+                0x0000067e                put_USART_PC_char
  .text.sendData_int16_t
-                0x000005fa       0x14 UM6_test.o
-                0x000005fa                sendData_int16_t
+                0x0000068e       0x14 UM6_test.o
+                0x0000068e                sendData_int16_t
  .text.sendUM6_Data
-                0x0000060e       0x2e UM6_test.o
-                0x0000060e                sendUM6_Data
+                0x000006a2       0x52 UM6_test.o
+                0x000006a2                sendUM6_Data
  .text.init32MHzClock
-                0x0000063c       0x1c UM6_test.o
-                0x0000063c                init32MHzClock
+                0x000006f4       0x1c UM6_test.o
+                0x000006f4                init32MHzClock
  .text.initUART
-                0x00000658       0x32 UM6_test.o
-                0x00000658                initUART
+                0x00000710       0x32 UM6_test.o
+                0x00000710                initUART
  .text.intPID_gains
-                0x0000068a       0x66 UM6_test.o
-                0x0000068a                intPID_gains
+                0x00000742       0x66 UM6_test.o
+                0x00000742                intPID_gains
  .text.Setup_DMA_ReceiveChannel
-                0x000006f0       0x64 UM6_test.o
-                0x000006f0                Setup_DMA_ReceiveChannel
- .text.main     0x00000754       0x7e UM6_test.o
-                0x00000754                main
- .text.libgcc.mul
-                0x000007d2       0x18 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.876/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avrxmega7\libgcc.a(_umulhisi3.o)
-                0x000007d2                __umulhisi3
-                0x000007ea                . = ALIGN (0x2)
+                0x000007a8       0x62 UM6_test.o
+                0x000007a8                Setup_DMA_ReceiveChannel
+ .text.main     0x0000080a       0x8e UM6_test.o
+                0x0000080a                main
+                0x00000898                . = ALIGN (0x2)
  *(.fini9)
- .fini9         0x000007ea        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.876/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avrxmega7\libgcc.a(_exit.o)
-                0x000007ea                _exit
-                0x000007ea                exit
+ .fini9         0x00000898        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.876/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avrxmega7\libgcc.a(_exit.o)
+                0x00000898                _exit
+                0x00000898                exit
  *(.fini9)
  *(.fini8)
  *(.fini8)
@@ -655,11 +667,11 @@ LOAD c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.876/avr8
  *(.fini1)
  *(.fini1)
  *(.fini0)
- .fini0         0x000007ea        0x4 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.876/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avrxmega7\libgcc.a(_exit.o)
+ .fini0         0x00000898        0x4 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.876/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avrxmega7\libgcc.a(_exit.o)
  *(.fini0)
-                0x000007ee                _etext = .
+                0x0000089c                _etext = .
 
-.data           0x00802000        0x8 load address 0x000007ee
+.data           0x00802000        0x8 load address 0x0000089c
                 0x00802000                PROVIDE (__data_start, .)
  *(.data)
  .data          0x00802000        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.876/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avrxmega7/crtx128a1.o
@@ -676,8 +688,8 @@ LOAD c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.876/avr8
  .data          0x00802007        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.876/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avrxmega7\libgcc.a(_exit.o)
  .data          0x00802007        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.876/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avrxmega7\libgcc.a(_copy_data.o)
  .data          0x00802007        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.876/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avrxmega7\libgcc.a(_clear_bss.o)
- .data          0x00802007        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.876/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avrxmega7\libgcc.a(_umulhisi3.o)
  .data          0x00802007        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.876/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avrxmega7\libgcc.a(_muluhisi3.o)
+ .data          0x00802007        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.876/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avrxmega7\libgcc.a(_umulhisi3.o)
  .data          0x00802007        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.876/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avrxmega7\libc.a(errno.o)
  .data          0x00802007        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.876/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avrxmega7\libc.a(isalpha.o)
  .data          0x00802007        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.876/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avrxmega7\libc.a(isspace.o)
@@ -691,42 +703,42 @@ LOAD c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.876/avr8
                 0x00802008                _edata = .
                 0x00802008                PROVIDE (__data_end, .)
 
-.bss            0x00802008       0xe5
+.bss            0x00802008       0xeb
                 0x00802008                PROVIDE (__bss_start, .)
  *(.bss)
- .bss           0x00802008       0x10 UM6_test.o
+ .bss           0x00802008       0x16 UM6_test.o
                 0x00802008                commandTicker
                 0x0080200a                sendDataLoopCounter
                 0x0080200c                int16spiData
  *(.bss*)
  *(COMMON)
- COMMON         0x00802018       0xd5 UM6_test.o
-                0x00802018                UM6_EulerPitch
-                0x0080201a                UM6_EulerRoll
-                0x0080201c                spiMasterF
-                0x00802023                pid_total
-                0x00802025                rollAxis
-                0x00802053                Upper16bitWord
-                0x00802055                pitchAxis
-                0x00802083                throttleAxis
-                0x008020b1                p_term
-                0x008020b3                i_term
-                0x008020b5                UM6_EulerYaw
-                0x008020b7                d_term
-                0x008020b9                yawAxis
-                0x008020e7                int16counter
-                0x008020e9                slope
-                0x008020eb                Lower16bitWord
-                0x008020ed                PROVIDE (__bss_end, .)
-                0x000007ee                __data_load_start = LOADADDR (.data)
-                0x000007f6                __data_load_end = (__data_load_start + SIZEOF (.data))
+ COMMON         0x0080201e       0xd5 UM6_test.o
+                0x0080201e                UM6_EulerPitch
+                0x00802020                UM6_EulerRoll
+                0x00802022                spiMasterF
+                0x00802029                pid_total
+                0x0080202b                rollAxis
+                0x00802059                Upper16bitWord
+                0x0080205b                pitchAxis
+                0x00802089                throttleAxis
+                0x008020b7                p_term
+                0x008020b9                i_term
+                0x008020bb                UM6_EulerYaw
+                0x008020bd                d_term
+                0x008020bf                yawAxis
+                0x008020ed                int16counter
+                0x008020ef                slope
+                0x008020f1                Lower16bitWord
+                0x008020f3                PROVIDE (__bss_end, .)
+                0x0000089c                __data_load_start = LOADADDR (.data)
+                0x000008a4                __data_load_end = (__data_load_start + SIZEOF (.data))
 
-.noinit         0x008020ed        0x0
-                0x008020ed                PROVIDE (__noinit_start, .)
+.noinit         0x008020f3        0x0
+                0x008020f3                PROVIDE (__noinit_start, .)
  *(.noinit*)
-                0x008020ed                PROVIDE (__noinit_end, .)
-                0x008020ed                _end = .
-                0x008020ed                PROVIDE (__heap_start, .)
+                0x008020f3                PROVIDE (__noinit_end, .)
+                0x008020f3                _end = .
+                0x008020f3                PROVIDE (__heap_start, .)
 
 .eeprom         0x00810000        0x0
  *(.eeprom*)
@@ -791,46 +803,46 @@ LOAD c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.876/avr8
 .debug_sfnames
  *(.debug_sfnames)
 
-.debug_aranges  0x00000000      0x280
+.debug_aranges  0x00000000      0x2a8
  *(.debug_aranges)
  .debug_aranges
-                0x00000000      0x268 UM6_test.o
+                0x00000000      0x290 UM6_test.o
  .debug_aranges
-                0x00000268       0x18 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.876/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avrxmega7\libc.a(errno.o)
+                0x00000290       0x18 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.876/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avrxmega7\libc.a(errno.o)
 
 .debug_pubnames
  *(.debug_pubnames)
 
-.debug_info     0x00000000     0x353c
+.debug_info     0x00000000     0x371a
  *(.debug_info)
- .debug_info    0x00000000     0x3509 UM6_test.o
- .debug_info    0x00003509       0x33 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.876/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avrxmega7\libc.a(errno.o)
+ .debug_info    0x00000000     0x36e7 UM6_test.o
+ .debug_info    0x000036e7       0x33 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.876/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avrxmega7\libc.a(errno.o)
  *(.gnu.linkonce.wi.*)
 
-.debug_abbrev   0x00000000      0x4c3
+.debug_abbrev   0x00000000      0x4df
  *(.debug_abbrev)
- .debug_abbrev  0x00000000      0x499 UM6_test.o
- .debug_abbrev  0x00000499       0x2a c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.876/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avrxmega7\libc.a(errno.o)
+ .debug_abbrev  0x00000000      0x4b5 UM6_test.o
+ .debug_abbrev  0x000004b5       0x2a c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.876/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avrxmega7\libc.a(errno.o)
 
-.debug_line     0x00000000      0xabc
+.debug_line     0x00000000      0xb32
  *(.debug_line)
- .debug_line    0x00000000      0xa51 UM6_test.o
- .debug_line    0x00000a51       0x6b c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.876/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avrxmega7\libc.a(errno.o)
+ .debug_line    0x00000000      0xac7 UM6_test.o
+ .debug_line    0x00000ac7       0x6b c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.876/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avrxmega7\libc.a(errno.o)
 
-.debug_frame    0x00000000      0x6c0
+.debug_frame    0x00000000      0x6ec
  *(.debug_frame)
- .debug_frame   0x00000000      0x6c0 UM6_test.o
+ .debug_frame   0x00000000      0x6ec UM6_test.o
 
-.debug_str      0x00000000     0x2713
+.debug_str      0x00000000     0x275a
  *(.debug_str)
- .debug_str     0x00000000     0x26c5 UM6_test.o
-                               0x273e (size before relaxing)
- .debug_str     0x000026c5       0x4e c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.876/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avrxmega7\libc.a(errno.o)
+ .debug_str     0x00000000     0x270c UM6_test.o
+                               0x2785 (size before relaxing)
+ .debug_str     0x0000270c       0x4e c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.876/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avrxmega7\libc.a(errno.o)
                                  0x60 (size before relaxing)
 
-.debug_loc      0x00000000     0x1b26
+.debug_loc      0x00000000     0x1a9c
  *(.debug_loc)
- .debug_loc     0x00000000     0x1b26 UM6_test.o
+ .debug_loc     0x00000000     0x1a9c UM6_test.o
 
 .debug_macinfo
  *(.debug_macinfo)
@@ -838,9 +850,9 @@ LOAD c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.876/avr8
 .debug_pubtypes
  *(.debug_pubtypes)
 
-.debug_ranges   0x00000000      0x258
+.debug_ranges   0x00000000      0x280
  *(.debug_ranges)
- .debug_ranges  0x00000000      0x258 UM6_test.o
+ .debug_ranges  0x00000000      0x280 UM6_test.o
 
 .debug_macro
  *(.debug_macro)

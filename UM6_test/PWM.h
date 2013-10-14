@@ -6,7 +6,7 @@
  */ 
 
 void initPWM(void);
-void doPWM(uint16_t,uint16_t,uint16_t,uint16_t,uint16_t);
+void doPWM(uint16_t,uint16_t,uint16_t,uint16_t);
 
 
 #ifndef  PWM_H_
@@ -76,7 +76,7 @@ void initPWM()
 	
 }
 
-void doPWM(uint16_t throttle,uint16_t speed_1, uint16_t speed_2, uint16_t speed_3, uint16_t speed_4)
+void doPWM(uint16_t speed_1, uint16_t speed_2, uint16_t speed_3, uint16_t speed_4)
 {
         /* The code check if the overflow flag is set,
          * if so it clears the flag and sets a new duty cycle for all
@@ -89,7 +89,7 @@ void doPWM(uint16_t throttle,uint16_t speed_1, uint16_t speed_2, uint16_t speed_
         {
             TC_ClearOverflowFlag(&MOTOR_PMW_TIMER0);      //Clear the IF by writing a logical 1 to the flag
 
-            MOTOR_PMW_TIMER0.CCABUF = throttle; //Change the compare value to change duty cycle
+            MOTOR_PMW_TIMER0.CCABUF = speed_1; //Change the compare value to change duty cycle
 			MOTOR_PMW_TIMER0.CCBBUF = speed_2;
 			MOTOR_PMW_TIMER0.CCCBUF = speed_3;
 			MOTOR_PMW_TIMER0.CCDBUF = speed_4;

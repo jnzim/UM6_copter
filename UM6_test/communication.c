@@ -26,6 +26,10 @@
 #define UM6_GYRO_PROC_Z			0x5D
 #define UM6_EULER_PHI_THETA		0x62		// returns roll and pitch as 16 bit signed integers
 #define UM6_EULER_PSI			0x63
+#define ZERO_GYROS				0xAC
+#define SET_ACCEL_REF			0xAF
+#define SET_MAG_REF				0xB0
+#define RESET_TO_FACTORY		0xB1
 
 void spi_set_up(void);
 void spi_master_write_byte(SPI_Master_t *,uint8_t);
@@ -207,33 +211,76 @@ void spi_master_get_32bit_reg(SPI_Master_t *spi, uint8_t regToRead)
 		//Lower16bitWord = (Lower16bitWord ^ 0xFFFF) + 1;
 }
 
+//
+//
+//void UpdateEulerAngles()
+	//{
+			//
+			//PORTF.OUTCLR = PIN4_bm;
+//
+			//uint8_t dummy_read;
+			////psi = yaw  phi = roll    theta = pitch
+			//dummy_read = spi_write_read(READ_COMMAND);
+			//dummy_read = spi_write_read(UM6_EULER_PHI_THETA);
+//
+			////MSB first
+			//UM6_EulerRoll =(UM6_EulerRoll << 8 ) +  spi_write_read(DUMMY_READ);
+			//UM6_EulerRoll =(UM6_EulerRoll << 8 ) +  spi_write_read(DUMMY_READ);
+			//UM6_EulerPitch =(UM6_EulerPitch << 8 ) +  spi_write_read(DUMMY_READ);
+			//UM6_EulerPitch =(UM6_EulerPitch << 8 ) +  spi_write_read(UM6_EULER_PSI);
+			//UM6_EulerYaw =(UM6_EulerYaw << 8 ) +  spi_write_read(DUMMY_READ);
+			//UM6_EulerYaw =(UM6_EulerYaw << 8 ) +  spi_write_read(DUMMY_READ);
+			//dummy_read = spi_write_read(DUMMY_READ);
+			//dummy_read =  spi_write_read(DUMMY_READ);
+//
+			//PORTF.OUTSET = PIN4_bm;
+	//
+			//
+		//
+		//
+	//}
+	
+	
 
 
-void UpdateEulerAngles()
-	{
-			
-			PORTF.OUTCLR = PIN4_bm;
 
-			uint8_t dummy_read;
-			//psi = yaw  phi = roll    theta = pitch
-			dummy_read = spi_write_read(READ_COMMAND);
-			dummy_read = spi_write_read(UM6_EULER_PHI_THETA);
+void ZeroGyros()
+{
+	uint8_t dummy_read;
+	//psi = yaw  phi = roll    theta = pitch
+	dummy_read = spi_write_read(WRITE_COMMAND);
+	dummy_read = spi_write_read(ZERO_GYROS);
+	
+	
+}
 
-			//MSB first
-			UM6_EulerRoll =(UM6_EulerRoll << 8 ) +  spi_write_read(DUMMY_READ);
-			UM6_EulerRoll =(UM6_EulerRoll << 8 ) +  spi_write_read(DUMMY_READ);
-			UM6_EulerPitch =(UM6_EulerPitch << 8 ) +  spi_write_read(DUMMY_READ);
-			UM6_EulerPitch =(UM6_EulerPitch << 8 ) +  spi_write_read(UM6_EULER_PSI);
-			UM6_EulerYaw =(UM6_EulerYaw << 8 ) +  spi_write_read(DUMMY_READ);
-			UM6_EulerYaw =(UM6_EulerYaw << 8 ) +  spi_write_read(DUMMY_READ);
-			dummy_read = spi_write_read(DUMMY_READ);
-			dummy_read =  spi_write_read(DUMMY_READ);
+void ZeroAccelerometers()
+{
+	uint8_t dummy_read;
 
-			PORTF.OUTSET = PIN4_bm;
-			
-			UM6_EulerRoll = UM6_EulerRoll/91;
-			UM6_EulerPitch = UM6_EulerPitch/91;
-			UM6_EulerYaw = UM6_EulerYaw/91;
-			
-			
-	}
+	dummy_read = spi_write_read(WRITE_COMMAND);
+	dummy_read = spi_write_read(SET_ACCEL_REF);
+	
+	
+}
+
+void ZeroMagnetometer()
+{
+	
+	uint8_t dummy_read;
+
+	dummy_read = spi_write_read(WRITE_COMMAND);
+	dummy_read = spi_write_read(SET_MAG_REF);
+		
+}	
+
+
+void ResetUM6_ToFactory()
+{
+	
+	uint8_t dummy_read;
+
+	dummy_read = spi_write_read(WRITE_COMMAND);
+	dummy_read = spi_write_read(RESET_TO_FACTORY);
+	
+}

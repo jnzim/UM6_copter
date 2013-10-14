@@ -3,6 +3,7 @@
 #include <stdlib.h> 
 #include "usart_driver.h"
 #include "avr_compiler.h"
+#include "PIDcontrol.h"
 #include "communication.c"
 #include "tc_driver.h"
 #include "tc_driver.c"
@@ -10,7 +11,7 @@
 #include "PWM.h"
 #include "dma_driver.h"
 #include "dma_driver.c"
-#include "PIDcontrol.h"
+
 
 
 
@@ -21,7 +22,7 @@
 #define	IMU_USART				USARTC1
 #define DMA_RX_Channel			&DMA.CH1
 #define MASK_TOP_BYTE			0x00FF
-#define NUM_CMD_BYTES		    10
+#define NUM_CMD_BYTES		    16
 #define SCALE_THROTTLE			4
 
 
@@ -63,25 +64,21 @@ int main(void)
     //The receiving DMA channel will wait for characters
     //and write them to Rx_Buf
     DMA_EnableChannel(DMA_RX_Channel);
-	
 
 		while(1)
 		{
 		
-			_delay_ms(5);
+			_delay_ms(2);
 
 	
-			UpdateEulerAngles();
+			UpdateEulerAngles(&rollAxis,&pitchAxis,&yawAxis);
 
-			PORTA.OUTTGL = 0xFF;			//  LEDS
+			//PORTA.OUTTGL = 0xFF;			//  LEDS
 			Get_DMA_DATA(DMA_RX_Channel);
-
-
-			//CalculateRate(&rollAxis);
-			//pid_attitude(&rollAxis);
-			//pid_rate(&rollAxis);
+			pid_attitude(&rollAxis);
+			SetPulseWidths();
 			int16counter++;
-			if (int16counter >= 15)
+			if (int16counter >= 10)
 			{
 					sendUM6_Data();
 					int16counter = 0;
@@ -93,7 +90,45 @@ int main(void)
 }	
 
 
+void SetPulseWidths()
+{
+	// check the signs
+	if(throttleAxis.attitude_command > 2000 && throttleAxis.attitude_command <= 4095)
+	{
+	doPWM(
+	//SCALE_THROTTLE*throttleAxis.command,SCALE_THROTTLE*throttleAxis.command,SCALE_THROTTLE*throttleAxis.command,SCALE_THROTTLE*throttleAxis.command
+	//throttleAxis.attitude_command * SCALE_THROTTLE + pitchAxis.rate_pid_out,
+	//throttleAxis.attitude_command * SCALE_THROTTLE + rollAxis.rate_pid_out,
+	//throttleAxis.attitude_command * SCALE_THROTTLE - pitchAxis.rate_pid_out,
+	//throttleAxis.attitude_command * SCALE_THROTTLE - rollAxis.rate_pid_out
+	
+	
+	throttleAxis.attitude_command * SCALE_THROTTLE + pitchAxis.attitude_pid_out,
+	throttleAxis.attitude_command * SCALE_THROTTLE + rollAxis.attitude_pid_out,
+	throttleAxis.attitude_command * SCALE_THROTTLE - pitchAxis.attitude_pid_out,
+	throttleAxis.attitude_command * SCALE_THROTTLE - rollAxis.attitude_pid_out
+	
+	
+	);
+	
+	//doPWM(
+	//0,
+	//throttleAxis.command * SCALE_THROTTLE + rollAxis.error,
+	//0,
+	//throttleAxis.command * SCALE_THROTTLE - rollAxis.error);
+	}
+	//}
+	else
+	{
+	doPWM(0,0,0,0);
+	}
+	
+}
+
+
 //250 mSec * 1000mSec / 1 Sec * 1/32,000,000
+//  this date is read in on the USART, it's sent from the PC
+//  joystck commands, gains...
 void getCommand()
 {
 
@@ -105,12 +140,6 @@ void getCommand()
 
 		throttleAxis.attitude_command =(throttleAxis.attitude_command << 8 ) + Rx_Buf[i++];
 		throttleAxis.attitude_command =(throttleAxis.attitude_command << 8 ) + Rx_Buf[i++];
-
-		//yawAxis.command = (yawAxis.command << 8 ) + Rx_Buf[i++];
-		//yawAxis.command =(yawAxis.command << 8 ) + Rx_Buf[i++];
-
-		//pitchAxis.command = (pitchAxis.command  << 8 ) + Rx_Buf[i++];
-		//pitchAxis.command  =(pitchAxis.command  << 8 ) + Rx_Buf[i++];
 		
 		yawAxis.attitude_command = (yawAxis.attitude_command << 8 ) + Rx_Buf[i++];
 		yawAxis.attitude_command =(yawAxis.attitude_command << 8 ) + Rx_Buf[i++];
@@ -120,6 +149,7 @@ void getCommand()
 			
 		rollAxis.attitude_command = (rollAxis.attitude_command << 8 ) + Rx_Buf[i++];
 		rollAxis.attitude_command =(rollAxis.attitude_command << 8 ) + Rx_Buf[i++];
+	
 		
 		//squareWave();
 		//rollAxis.Kp_rate = (rollAxis.Kp_rate  << 8 ) + Rx_Buf[i++];
@@ -130,15 +160,15 @@ void getCommand()
 		//
 		//rollAxis.Kd_rate = (rollAxis.Kd_rate << 8 ) + Rx_Buf[i++];
 		//rollAxis.Kd_rate =(rollAxis.Kd_rate << 8 ) + Rx_Buf[i++];
-//
-		//rollAxis.Kp = (rollAxis.Kp  << 8 ) + Rx_Buf[i++];
-		//rollAxis.Kp  =(rollAxis.Kp  << 8 ) + Rx_Buf[i++];
-		//
-		//rollAxis.Ki = (rollAxis.Ki << 8 ) + Rx_Buf[i++];
-		//rollAxis.Ki =(rollAxis.Ki << 8 ) + Rx_Buf[i++];
-		//
-		//rollAxis.Kd = (rollAxis.Kd << 8 ) + Rx_Buf[i++];
-		//rollAxis.Kd =(rollAxis.Kd << 8 ) + Rx_Buf[i++];
+
+		rollAxis.Kp = (rollAxis.Kp  << 8 ) + Rx_Buf[i++];
+		rollAxis.Kp  =(rollAxis.Kp  << 8 ) + Rx_Buf[i++];
+		
+		rollAxis.Ki = (rollAxis.Ki << 8 ) + Rx_Buf[i++];
+		rollAxis.Ki =(rollAxis.Ki << 8 ) + Rx_Buf[i++];
+		
+		rollAxis.Kd = (rollAxis.Kd << 8 ) + Rx_Buf[i++];
+		rollAxis.Kd =(rollAxis.Kd << 8 ) + Rx_Buf[i++];
 		
 		
 	}
@@ -154,8 +184,38 @@ void getCommand()
 	}
 }
 
-
+	
+	//this data is read in from the IMU on the SPI buss
+	
+	void UpdateEulerAngles()
+	{
 		
+		PORTF.OUTCLR = PIN4_bm;
+
+		uint8_t dummy_read;
+		//psi = yaw  phi = roll    theta = pitch
+		dummy_read = spi_write_read(READ_COMMAND);
+		dummy_read = spi_write_read(UM6_EULER_PHI_THETA);
+
+		//MSB first
+		rollAxis.attitude_feedback =(rollAxis.attitude_feedback << 8 ) +  spi_write_read(DUMMY_READ);
+		rollAxis.attitude_feedback =(rollAxis.attitude_feedback << 8 ) +  spi_write_read(DUMMY_READ);
+		
+		pitchAxis.attitude_feedback =(pitchAxis.attitude_feedback << 8 ) +  spi_write_read(DUMMY_READ);
+		pitchAxis.attitude_feedback =(pitchAxis.attitude_feedback << 8 ) +  spi_write_read(UM6_EULER_PSI);
+		
+		yawAxis.attitude_feedback =(yawAxis.attitude_feedback << 8 ) +  spi_write_read(DUMMY_READ);
+		yawAxis.attitude_feedback =(yawAxis.attitude_feedback << 8 ) +  spi_write_read(DUMMY_READ);
+		
+		dummy_read = spi_write_read(DUMMY_READ);
+		dummy_read =  spi_write_read(DUMMY_READ);
+
+		PORTF.OUTSET = PIN4_bm;
+		
+		
+		
+		
+	}
 
 
 //send 16 bit data on USART, 2 bytes
@@ -178,11 +238,15 @@ void sendData_int32_t(int32_t sendthis)
 void sendUM6_Data()
 {
 	sendData_int16_t(0xFFFE);
-	//sendData_int16_t(0x0404);
-	sendData_int16_t(UM6_EulerYaw);
-	sendData_int16_t(UM6_EulerPitch);
-	sendData_int16_t(UM6_EulerRoll);
+	sendData_int16_t(yawAxis.attitude_feedback);
+	sendData_int16_t(pitchAxis.attitude_feedback);
+	sendData_int16_t(rollAxis.attitude_feedback);
+	sendData_int16_t(rollAxis.attitude_pid_out);
+	sendData_int16_t(rollAxis.attitude_error);
+	sendData_int16_t(rollAxis.attitude_command);
+
 	
+
 }
 
 
