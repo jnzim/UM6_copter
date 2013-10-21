@@ -1,6 +1,7 @@
 
 #include <avr/io.h>
 #include <stdlib.h> 
+#include <avr/interrupt.h>
 #include "usart_driver.h"
 #include "avr_compiler.h"
 #include "PIDcontrol.h"
@@ -22,7 +23,7 @@
 #define	IMU_USART				USARTC1
 #define DMA_RX_Channel			&DMA.CH1
 #define MASK_TOP_BYTE			0x00FF
-#define NUM_CMD_BYTES		    16
+#define NUM_CMD_BYTES		    32
 #define SCALE_THROTTLE			4
 
 
@@ -38,7 +39,9 @@ void intPID_gains(void);
 void Get_DMA_DATA( volatile DMA_CH_t * channel );
 
 
+
 int16_t int16counter;
+uint8_t newPacketFlag;
 PID_data_t rollAxis,yawAxis,pitchAxis,throttleAxis;
 uint16_t sendDataLoopCounter = 0;
 int commandTicker = 0;
@@ -54,85 +57,93 @@ int main(void)
 	PORTA.DIRSET = 0xFF;			//  LEDS
 	init32MHzClock();
 	initUART();
-    spi_set_up();intPID_gains();
+    spi_set_up();
+	intPID_gains();
     initPWM();
-    init32MHzClock();
     initUART();
+	 ZeroGyros();
+	 _delay_ms(1000);
+	 ZeroAccelerometers();
+	 _delay_ms(3000);
     //Initialize DMAC
     DMA_Enable();
     Setup_DMA_ReceiveChannel();
     //The receiving DMA channel will wait for characters
     //and write them to Rx_Buf
     DMA_EnableChannel(DMA_RX_Channel);
+	intiLoopTimer();
+	 sei(); 
 
 		while(1)
 		{
-		
-			_delay_ms(2);
-
 	
-			UpdateEulerAngles(&rollAxis,&pitchAxis,&yawAxis);
-
-			//PORTA.OUTTGL = 0xFF;			//  LEDS
-			Get_DMA_DATA(DMA_RX_Channel);
-			pid_attitude(&rollAxis);
-			SetPulseWidths();
-			int16counter++;
-			if (int16counter >= 10)
-			{
-					sendUM6_Data();
-					int16counter = 0;
-			}
-			
+			nop();
 		}		
 				
 	 
 }	
 
 
+//  runs on interrupt every 4mSec,250Hz
+void ControlLoop()
+{
+	UpdateEulerAngles();
+	//pid_attitude(&rollAxis);
+	//SetPulseWidths();
+	int16counter++;
+	if (int16counter >= 10)						//  mSec
+	{
+		WriteToPC_SPI();
+		//Get_DMA_DATA(DMA_RX_Channel);			// DMA data is refreshed every 50mSec
+		//sendUM6_Data();
+		int16counter = 0;
+		
+	}
+	
+}
+
 void SetPulseWidths()
 {
 	// check the signs
 	if(throttleAxis.attitude_command > 2000 && throttleAxis.attitude_command <= 4095)
 	{
-	doPWM(
-	//SCALE_THROTTLE*throttleAxis.command,SCALE_THROTTLE*throttleAxis.command,SCALE_THROTTLE*throttleAxis.command,SCALE_THROTTLE*throttleAxis.command
-	//throttleAxis.attitude_command * SCALE_THROTTLE + pitchAxis.rate_pid_out,
-	//throttleAxis.attitude_command * SCALE_THROTTLE + rollAxis.rate_pid_out,
-	//throttleAxis.attitude_command * SCALE_THROTTLE - pitchAxis.rate_pid_out,
-	//throttleAxis.attitude_command * SCALE_THROTTLE - rollAxis.rate_pid_out
-	
-	
-	throttleAxis.attitude_command * SCALE_THROTTLE + pitchAxis.attitude_pid_out,
-	throttleAxis.attitude_command * SCALE_THROTTLE + rollAxis.attitude_pid_out,
-	throttleAxis.attitude_command * SCALE_THROTTLE - pitchAxis.attitude_pid_out,
-	throttleAxis.attitude_command * SCALE_THROTTLE - rollAxis.attitude_pid_out
-	
-	
-	);
-	
-	//doPWM(
-	//0,
-	//throttleAxis.command * SCALE_THROTTLE + rollAxis.error,
-	//0,
-	//throttleAxis.command * SCALE_THROTTLE - rollAxis.error);
+		doPWM(
+
+		throttleAxis.attitude_command * SCALE_THROTTLE + pitchAxis.attitude_pid_out,
+		throttleAxis.attitude_command * SCALE_THROTTLE + rollAxis.attitude_pid_out,
+		throttleAxis.attitude_command * SCALE_THROTTLE - pitchAxis.attitude_pid_out,
+		throttleAxis.attitude_command * SCALE_THROTTLE - rollAxis.attitude_pid_out	);
+		
 	}
-	//}
+
 	else
 	{
-	doPWM(0,0,0,0);
+		doPWM(0,0,0,0);
 	}
 	
 }
 
+uint8_t myDMA_ReturnStatus_blocking( volatile DMA_CH_t * channel )
+{
+	uint8_t flagMask;
+	uint8_t relevantFlags;
 
+	flagMask = DMA_CH_ERRIF_bm | DMA_CH_TRNIF_bm;
+
+	do {
+		relevantFlags = channel->CTRLB & flagMask;
+	} while (relevantFlags == 0x00);
+	//getCommandDoubleBuffer();
+	getCommand();
+	channel->CTRLB = flagMask;
+	return relevantFlags;
+}
 //250 mSec * 1000mSec / 1 Sec * 1/32,000,000
 //  this date is read in on the USART, it's sent from the PC
-//  joystck commands, gains...
+//  joystick commands, gains...
 void getCommand()
 {
-
-	int i;
+	int i = 0;
 	
 	if (Rx_Buf[0] == 0xFF && Rx_Buf[1] == 0xFD)
 	{
@@ -149,17 +160,60 @@ void getCommand()
 			
 		rollAxis.attitude_command = (rollAxis.attitude_command << 8 ) + Rx_Buf[i++];
 		rollAxis.attitude_command =(rollAxis.attitude_command << 8 ) + Rx_Buf[i++];
-	
+
+		rollAxis.Kp = (rollAxis.Kp  << 8 ) + Rx_Buf[i++];
+		rollAxis.Kp  =(rollAxis.Kp  << 8 ) + Rx_Buf[i++];
 		
-		//squareWave();
-		//rollAxis.Kp_rate = (rollAxis.Kp_rate  << 8 ) + Rx_Buf[i++];
-		//rollAxis.Kp_rate  =(rollAxis.Kp_rate  << 8 ) + Rx_Buf[i++];
-		//
-		//rollAxis.Ki_rate = (rollAxis.Ki_rate << 8 ) + Rx_Buf[i++];
-		//rollAxis.Ki_rate =(rollAxis.Ki_rate << 8 ) + Rx_Buf[i++];
-		//
-		//rollAxis.Kd_rate = (rollAxis.Kd_rate << 8 ) + Rx_Buf[i++];
-		//rollAxis.Kd_rate =(rollAxis.Kd_rate << 8 ) + Rx_Buf[i++];
+		rollAxis.Ki = (rollAxis.Ki << 8 ) + Rx_Buf[i++];
+		rollAxis.Ki =(rollAxis.Ki << 8 ) + Rx_Buf[i++];
+		
+		rollAxis.Kd = (rollAxis.Kd << 8 ) + Rx_Buf[i++];
+		rollAxis.Kd =(rollAxis.Kd << 8 ) + Rx_Buf[i++];
+
+		
+	}
+	else
+	{
+		//  if we didn't start with the frame header, something isn't right,  rest the DMA channel
+		//  would be nice to know why this happens,  maybe we are reading the buffer will the DMA is trying to write to it
+		//PORTA.OUTTGL = 0x00000001;
+		DMA_Disable();
+		DMA_Enable();
+		Setup_DMA_ReceiveChannel();
+		DMA_EnableChannel(DMA_RX_Channel);
+		
+		
+	}
+}
+
+
+
+
+
+
+ 
+void getCommandDoubleBuffer()
+{
+	int i = 0;
+	
+	while (Rx_Buf[i++] != 0xFF && Rx_Buf[i] != 0xFD)
+	{
+		
+	}	
+	
+	i++;
+	
+		throttleAxis.attitude_command =(throttleAxis.attitude_command << 8 ) + Rx_Buf[i++];
+		throttleAxis.attitude_command =(throttleAxis.attitude_command << 8 ) + Rx_Buf[i++];
+		
+		yawAxis.attitude_command = (yawAxis.attitude_command << 8 ) + Rx_Buf[i++];
+		yawAxis.attitude_command =(yawAxis.attitude_command << 8 ) + Rx_Buf[i++];
+		
+		pitchAxis.attitude_command = (pitchAxis.attitude_command << 8 ) + Rx_Buf[i++];
+		pitchAxis.attitude_command =(pitchAxis.attitude_command << 8 ) + Rx_Buf[i++];
+		
+		rollAxis.attitude_command = (rollAxis.attitude_command << 8 ) + Rx_Buf[i++];
+		rollAxis.attitude_command =(rollAxis.attitude_command << 8 ) + Rx_Buf[i++];
 
 		rollAxis.Kp = (rollAxis.Kp  << 8 ) + Rx_Buf[i++];
 		rollAxis.Kp  =(rollAxis.Kp  << 8 ) + Rx_Buf[i++];
@@ -170,52 +224,66 @@ void getCommand()
 		rollAxis.Kd = (rollAxis.Kd << 8 ) + Rx_Buf[i++];
 		rollAxis.Kd =(rollAxis.Kd << 8 ) + Rx_Buf[i++];
 		
-		
-	}
-	else
-	{
-		//  if we didn't start with the frame header, something isn't right,  rest the DMA channel
-		//  would be nice to know why this happens,  maybe we are reading the buffer will the DMA is trying to write to it
-		//PORTA.OUTTGL = 0x00000001;
-		//DMA_Disable();
-		//DMA_Enable();
-		//Setup_DMA_ReceiveChannel();
-		//DMA_EnableChannel(DMA_RX_Channel);
-	}
+}	
+	
+	//this data is read in from the IMU on the SPI bus
+	
+void UpdateEulerAngles()
+{
+
+	PORTF.OUTCLR = PIN4_bm;
+
+	uint8_t dummy_read;
+	//psi = yaw  phi = roll    theta = pitch
+	dummy_read = spi_write_read(READ_COMMAND);
+	dummy_read = spi_write_read(UM6_EULER_PHI_THETA);
+
+	//MSB first
+	rollAxis.attitude_feedback =(rollAxis.attitude_feedback << 8 ) +  spi_write_read(DUMMY_READ);
+	rollAxis.attitude_feedback =(rollAxis.attitude_feedback << 8 ) +  spi_write_read(DUMMY_READ);
+	pitchAxis.attitude_feedback =(pitchAxis.attitude_feedback << 8 ) +  spi_write_read(DUMMY_READ);
+	pitchAxis.attitude_feedback =(pitchAxis.attitude_feedback << 8 ) +  spi_write_read(UM6_EULER_PSI);
+	yawAxis.attitude_feedback =(yawAxis.attitude_feedback << 8 ) +  spi_write_read(DUMMY_READ);
+	yawAxis.attitude_feedback =(yawAxis.attitude_feedback << 8 ) +  spi_write_read(DUMMY_READ);
+	dummy_read = spi_write_read(DUMMY_READ);
+	dummy_read =  spi_write_read(DUMMY_READ);
+
+	PORTF.OUTSET = PIN4_bm;
+
+	SetNot0xFFFF(rollAxis.attitude_feedback);
+	SetNot0xFFFF(pitchAxis.attitude_feedback);
+	SetNot0xFFFF(yawAxis.attitude_feedback);
+	
+
+
 }
 
-	
-	//this data is read in from the IMU on the SPI buss
-	
-	void UpdateEulerAngles()
-	{
-		
-		PORTF.OUTCLR = PIN4_bm;
+
+void WriteToPC_SPI()
+{
+		PORTE.OUTCLR = PIN4_bm;
 
 		uint8_t dummy_read;
 		//psi = yaw  phi = roll    theta = pitch
-		dummy_read = spi_write_read(READ_COMMAND);
-		dummy_read = spi_write_read(UM6_EULER_PHI_THETA);
-
-		//MSB first
-		rollAxis.attitude_feedback =(rollAxis.attitude_feedback << 8 ) +  spi_write_read(DUMMY_READ);
-		rollAxis.attitude_feedback =(rollAxis.attitude_feedback << 8 ) +  spi_write_read(DUMMY_READ);
+	
 		
-		pitchAxis.attitude_feedback =(pitchAxis.attitude_feedback << 8 ) +  spi_write_read(DUMMY_READ);
-		pitchAxis.attitude_feedback =(pitchAxis.attitude_feedback << 8 ) +  spi_write_read(UM6_EULER_PSI);
+		dummy_read = spiPC_write_read(MASK_TOP_BYTE & (rollAxis.attitude_feedback >> 8));
+		dummy_read = spiPC_write_read(MASK_TOP_BYTE & rollAxis.attitude_feedback);
 		
-		yawAxis.attitude_feedback =(yawAxis.attitude_feedback << 8 ) +  spi_write_read(DUMMY_READ);
-		yawAxis.attitude_feedback =(yawAxis.attitude_feedback << 8 ) +  spi_write_read(DUMMY_READ);
+		dummy_read = spiPC_write_read(MASK_TOP_BYTE & (pitchAxis.attitude_feedback >> 8));
+		dummy_read = spiPC_write_read(MASK_TOP_BYTE & pitchAxis.attitude_feedback);
 		
-		dummy_read = spi_write_read(DUMMY_READ);
-		dummy_read =  spi_write_read(DUMMY_READ);
-
-		PORTF.OUTSET = PIN4_bm;
+		dummy_read = spiPC_write_read(MASK_TOP_BYTE & (yawAxis.attitude_feedback >> 8));
+		dummy_read = spiPC_write_read(MASK_TOP_BYTE & yawAxis.attitude_feedback);
 		
 		
+		dummy_read = spiPC_write_read(0x00);
 		
+		//dummy_read = spiPC_write_read(0x11);
+		//dummy_read = spiPC_write_read(0x00);
+		PORTE.OUTSET = PIN4_bm;
 		
-	}
+}
 
 
 //send 16 bit data on USART, 2 bytes
@@ -237,7 +305,7 @@ void sendData_int32_t(int32_t sendthis)
 
 void sendUM6_Data()
 {
-	sendData_int16_t(0xFFFE);
+	sendData_int16_t(0xFFFF);
 	sendData_int16_t(yawAxis.attitude_feedback);
 	sendData_int16_t(pitchAxis.attitude_feedback);
 	sendData_int16_t(rollAxis.attitude_feedback);
@@ -247,6 +315,16 @@ void sendUM6_Data()
 
 	
 
+}
+
+void SetNot0xFFFF(uint16_t chkValue)
+{
+	if (chkValue == 0xFFFF)
+	{
+		return 0xFFFE;
+	}
+	else return chkValue;
+	
 }
 
 
@@ -261,11 +339,17 @@ void Get_DMA_DATA( volatile DMA_CH_t * channel )
 
 	if (relevantFlags != 0x00)
 	{
-		getCommand();
 		channel->CTRLB = flagMask;
+		getCommandDoubleBuffer();
+		//getCommand();
 	}
+	
 
 }
+
+
+
+
 
 
 
@@ -394,12 +478,44 @@ void intPID_gains()
 void Setup_DMA_ReceiveChannel( void )
 {
 	DMA_SetupBlock(  DMA_RX_Channel,(void *) &USARTD1.DATA, DMA_CH_SRCRELOAD_NONE_gc,  DMA_CH_SRCDIR_FIXED_gc, Rx_Buf,
-	DMA_CH_DESTRELOAD_BLOCK_gc, DMA_CH_DESTDIR_INC_gc, NUM_CMD_BYTES, DMA_CH_BURSTLEN_1BYTE_gc,  0x00, true);
+	DMA_CH_DESTRELOAD_BLOCK_gc, DMA_CH_DESTDIR_INC_gc, NUM_CMD_BYTES, DMA_CH_BURSTLEN_2BYTE_gc,  0x00, true);
 	
 	DMA_EnableSingleShot(DMA_RX_Channel);
 	
 	// USART Trigger source, Receive complete
 	DMA_SetTriggerSource(DMA_RX_Channel, DMA_CH_TRIGSRC_USARTD1_RXC_gc);
+	
+}
+void intiLoopTimer()
+{
+	
+
+	// Set the timer to run at the fastest rate. 
+	TCD0.CTRLA = TC_CLKSEL_DIV4_gc;
+
+	/* Configure the timer for normal counting. */
+	TCD0.CTRLB = TC_WGMODE_NORMAL_gc;
+
+	/* At 32 MHz/DIV_4 = 8Mhz, one tick is 0.125 us.  Set period to 4mSec = 2mSec / .125uSec = 32000 */
+	TCD0.PER = 32000;
+
+	/* Configure timer to generate an interrupt on overflow. */
+	TCD0.INTCTRLA = TC_OVFINTLVL_LO_gc;
+
+	/* Enable this interrupt level. */
+	PMIC.CTRL |= PMIC_LOLVLEN_bm;
+
+}
+//  one clock cycle is 1/32Mhz = 30uSec ,  need to overflow ever 4 mSec = 250Hz
+// = 128,000 cycles
+//2^16 = 65353  65536 -32000 = 33536
+
+// switch  to clock divisor = 4, so  32Mhz / 250Hz = 32000 ticks  
+/* Function to handle timer overflowing. */
+ISR(TCD0_OVF_vect)
+{
+	ControlLoop();
+	TCD0.CNT = 0; 
 	
 }
 
