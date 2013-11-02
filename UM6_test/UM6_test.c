@@ -25,6 +25,7 @@
 #define MASK_TOP_BYTE			0x00FF
 #define NUM_CMD_BYTES		    32
 #define SCALE_THROTTLE			4
+#define END_PACKET_CHAR			0xCC
 
 
 
@@ -188,8 +189,8 @@ void WriteToPC_SPI()
 		dummy_read = spiPC_write_read(MASK_TOP_BYTE & (yawAxis.attitude_feedback >> 8));
 		dummy_read = spiPC_write_read(MASK_TOP_BYTE & yawAxis.attitude_feedback);
 			
-		dummy_read = spiPC_write_read(0xCC);
-		dummy_read = spiPC_write_read(0xCC);
+		dummy_read = spiPC_write_read(END_PACKET_CHAR);
+		dummy_read = spiPC_write_read(END_PACKET_CHAR);
 ;
 	
 		PORTE.OUTSET = PIN4_bm;
