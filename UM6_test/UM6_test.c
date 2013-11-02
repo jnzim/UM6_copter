@@ -84,14 +84,14 @@ int main(void)
 }	
 
 
-//  runs on interrupt every 4mSec,250Hz
+//  runs on interrupt every 3.5mSec,250Hz
 void ControlLoop()
 {
 	UpdateEulerAngles();
 	//pid_attitude(&rollAxis);
 	//SetPulseWidths();
 	int16counter++;
-	if (int16counter >= 10)						//  mSec
+	if (int16counter >= 7)						// 3.5*2 = 7
 	{
 		WriteToPC_SPI();
 		//sendUM6_Data();
@@ -159,18 +159,11 @@ void UpdateEulerAngles()
 	
 	//MSB first
 	rollAxis.attitude_feedback = (spi_write_read(DUMMY_READ)<< 8) | spi_write_read(DUMMY_READ);
-	//int Int = bytes[0] | ( (int)bytes[1] << 8 ) | ( (int)bytes[2] << 16 ) | ( (int)bytes[3] << 24 );
-	//rollAxis.attitude_feedback =(rollAxis.attitude_feedback << 8 ) +  spi_write_read(DUMMY_READ);
-	//rollAxis.attitude_feedback =(rollAxis.attitude_feedback << 8 ) +  spi_write_read(DUMMY_READ);
-	
-	
+
 	pitchAxis.attitude_feedback = (spi_write_read(DUMMY_READ)<< 8) | spi_write_read(UM6_EULER_PSI);
-	//pitchAxis.attitude_feedback =(pitchAxis.attitude_feedback << 8 ) +  spi_write_read(DUMMY_READ);
-	//pitchAxis.attitude_feedback =(pitchAxis.attitude_feedback << 8 ) +  spi_write_read(UM6_EULER_PSI);
 	
 	yawAxis.attitude_feedback = (spi_write_read(DUMMY_READ)<< 8) | spi_write_read(DUMMY_READ);
-	//yawAxis.attitude_feedback =(yawAxis.attitude_feedback << 8 ) +  spi_write_read(DUMMY_READ);
-	//yawAxis.attitude_feedback =(yawAxis.attitude_feedback << 8 ) +  spi_write_read(DUMMY_READ);
+
 	
 	dummy_read = spi_write_read(DUMMY_READ);
 	dummy_read =  spi_write_read(DUMMY_READ);
@@ -185,27 +178,16 @@ void WriteToPC_SPI()
 		PORTE.OUTCLR = PIN4_bm;
 
 		uint8_t dummy_read;
-		
-		rollAxis.attitude_command = (rollAxis.attitude_command << 8)  + spiPC_write_read(MASK_TOP_BYTE & (rollAxis.attitude_feedback >> 8));
-		rollAxis.attitude_command = (rollAxis.attitude_command << 8)  + spiPC_write_read(MASK_TOP_BYTE & rollAxis.attitude_feedback);
-		
-		pitchAxis.attitude_command = (pitchAxis.attitude_command << 8)  + spiPC_write_read(MASK_TOP_BYTE & (pitchAxis.attitude_feedback >> 8));
-		pitchAxis.attitude_command = (pitchAxis.attitude_command << 8)  + spiPC_write_read(MASK_TOP_BYTE & pitchAxis.attitude_feedback);
-		
-		
-		yawAxis.attitude_command = (yawAxis.attitude_command << 8)  + spiPC_write_read(MASK_TOP_BYTE & (yawAxis.attitude_feedback >> 8));
-		yawAxis.attitude_command = (yawAxis.attitude_command << 8)  + spiPC_write_read(MASK_TOP_BYTE & yawAxis.attitude_feedback);
-		
-	//
-		//dummy_read = spiPC_write_read(MASK_TOP_BYTE & (rollAxis.attitude_command >> 8));
-		//dummy_read = spiPC_write_read(MASK_TOP_BYTE & rollAxis.attitude_command);
-		//
-		//dummy_read = spiPC_write_read(MASK_TOP_BYTE & (pitchAxis.attitude_command >> 8));
-		//dummy_read = spiPC_write_read(MASK_TOP_BYTE & pitchAxis.attitude_command);
-		//
-		//dummy_read = spiPC_write_read(MASK_TOP_BYTE & (yawAxis.attitude_command >> 8));
-		//dummy_read = spiPC_write_read(MASK_TOP_BYTE & yawAxis.attitude_command);
-		//
+
+		dummy_read = spiPC_write_read(MASK_TOP_BYTE & (rollAxis.attitude_feedback >> 8));
+		dummy_read = spiPC_write_read(MASK_TOP_BYTE & rollAxis.attitude_feedback);
+	
+		dummy_read = spiPC_write_read(MASK_TOP_BYTE & (pitchAxis.attitude_feedback >> 8));
+		dummy_read = spiPC_write_read(MASK_TOP_BYTE & pitchAxis.attitude_feedback);
+	
+		dummy_read = spiPC_write_read(MASK_TOP_BYTE & (yawAxis.attitude_feedback >> 8));
+		dummy_read = spiPC_write_read(MASK_TOP_BYTE & yawAxis.attitude_feedback);
+			
 		dummy_read = spiPC_write_read(0xCC);
 		dummy_read = spiPC_write_read(0xCC);
 ;
@@ -427,10 +409,10 @@ void intiLoopTimer()
 	/* Configure the timer for normal counting. */
 	TCD0.CTRLB = TC_WGMODE_NORMAL_gc;
 
-	/* At 32 MHz/DIV_4 = 8Mhz, one tick is 0.125 us.  Set period to 4mSec = 2mSec / .125uSec = 32000 */
-	TCD0.PER = 32000;
+	// At 32 MHz/DIV_4 = 8Mhz,  65353 - (8,000,000 * .0035Sec) = 37535 
+	TCD0.PER = 37535;
 
-	/* Configure timer to generate an interrupt on overflow. */
+	//Configure timer to generate an interrupt on overflow. */
 	TCD0.INTCTRLA = TC_OVFINTLVL_LO_gc;
 
 	/* Enable this interrupt level. */
