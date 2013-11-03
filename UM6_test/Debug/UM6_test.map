@@ -33,17 +33,18 @@ UM6_EulerRoll       0x2               UM6_test.o
 errno               0x2               c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.876/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avrxmega7\libc.a(errno.o)
 spiMasterF          0x7               UM6_test.o
 pid_total           0x2               UM6_test.o
-rollAxis            0x2e              UM6_test.o
+rollAxis            0x30              UM6_test.o
 Upper16bitWord      0x2               UM6_test.o
 newPacketFlag       0x1               UM6_test.o
-pitchAxis           0x2e              UM6_test.o
-throttleAxis        0x2e              UM6_test.o
+pitchAxis           0x30              UM6_test.o
+throttleAxis        0x30              UM6_test.o
 p_term              0x2               UM6_test.o
 i_term              0x2               UM6_test.o
 UM6_EulerYaw        0x2               UM6_test.o
+systemData          0x20              UM6_test.o
 spiMasterE          0x7               UM6_test.o
 d_term              0x2               UM6_test.o
-yawAxis             0x2e              UM6_test.o
+yawAxis             0x30              UM6_test.o
 int16counter        0x2               UM6_test.o
 slope               0x2               UM6_test.o
 Lower16bitWord      0x2               UM6_test.o
@@ -421,7 +422,7 @@ LOAD c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.876/avr8
 .rela.plt
  *(.rela.plt)
 
-.text           0x00000000      0x660
+.text           0x00000000      0x756
  *(.vectors)
  .vectors       0x00000000      0x1f4 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.876/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avrxmega7/crtx128a1.o
                 0x00000000                __vector_default
@@ -630,33 +631,33 @@ LOAD c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.876/avr8
                 0x000003a2       0x88 UM6_test.o
                 0x000003a2                UpdateEulerAngles
  .text.WriteToPC_SPI
-                0x0000042a       0x6c UM6_test.o
+                0x0000042a      0x162 UM6_test.o
                 0x0000042a                WriteToPC_SPI
  .text.ControlLoop
-                0x00000496       0x28 UM6_test.o
-                0x00000496                ControlLoop
+                0x0000058c       0x28 UM6_test.o
+                0x0000058c                ControlLoop
  .text.init32MHzClock
-                0x000004be       0x1c UM6_test.o
-                0x000004be                init32MHzClock
+                0x000005b4       0x1c UM6_test.o
+                0x000005b4                init32MHzClock
  .text.initUART
-                0x000004da       0x32 UM6_test.o
-                0x000004da                initUART
+                0x000005d0       0x32 UM6_test.o
+                0x000005d0                initUART
  .text.intPID_gains
-                0x0000050c       0x66 UM6_test.o
-                0x0000050c                intPID_gains
+                0x00000602       0x66 UM6_test.o
+                0x00000602                intPID_gains
  .text.intiLoopTimer
-                0x00000572       0x22 UM6_test.o
-                0x00000572                intiLoopTimer
- .text.main     0x00000594       0x5a UM6_test.o
-                0x00000594                main
+                0x00000668       0x22 UM6_test.o
+                0x00000668                intiLoopTimer
+ .text.main     0x0000068a       0x5a UM6_test.o
+                0x0000068a                main
  .text.__vector_77
-                0x000005ee       0x6e UM6_test.o
-                0x000005ee                __vector_77
-                0x0000065c                . = ALIGN (0x2)
+                0x000006e4       0x6e UM6_test.o
+                0x000006e4                __vector_77
+                0x00000752                . = ALIGN (0x2)
  *(.fini9)
- .fini9         0x0000065c        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.876/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avrxmega7\libgcc.a(_exit.o)
-                0x0000065c                _exit
-                0x0000065c                exit
+ .fini9         0x00000752        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.876/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avrxmega7\libgcc.a(_exit.o)
+                0x00000752                _exit
+                0x00000752                exit
  *(.fini9)
  *(.fini8)
  *(.fini8)
@@ -675,11 +676,11 @@ LOAD c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.876/avr8
  *(.fini1)
  *(.fini1)
  *(.fini0)
- .fini0         0x0000065c        0x4 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.876/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avrxmega7\libgcc.a(_exit.o)
+ .fini0         0x00000752        0x4 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.876/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avrxmega7\libgcc.a(_exit.o)
  *(.fini0)
-                0x00000660                _etext = .
+                0x00000756                _etext = .
 
-.data           0x00802000        0xa load address 0x00000660
+.data           0x00802000        0xa load address 0x00000756
                 0x00802000                PROVIDE (__data_start, .)
  *(.data)
  .data          0x00802000        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.876/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avrxmega7/crtx128a1.o
@@ -712,40 +713,41 @@ LOAD c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.876/avr8
                 0x0080200a                _edata = .
                 0x0080200a                PROVIDE (__data_end, .)
 
-.bss            0x0080200a       0xdd
+.bss            0x0080200a      0x105
                 0x0080200a                PROVIDE (__bss_start, .)
  *(.bss)
  *(.bss*)
  *(COMMON)
- COMMON         0x0080200a       0xdd UM6_test.o
+ COMMON         0x0080200a      0x105 UM6_test.o
                 0x0080200a                UM6_EulerPitch
                 0x0080200c                UM6_EulerRoll
                 0x0080200e                spiMasterF
                 0x00802015                pid_total
                 0x00802017                rollAxis
-                0x00802045                Upper16bitWord
-                0x00802047                newPacketFlag
-                0x00802048                pitchAxis
-                0x00802076                throttleAxis
-                0x008020a4                p_term
-                0x008020a6                i_term
-                0x008020a8                UM6_EulerYaw
-                0x008020aa                spiMasterE
-                0x008020b1                d_term
-                0x008020b3                yawAxis
-                0x008020e1                int16counter
-                0x008020e3                slope
-                0x008020e5                Lower16bitWord
-                0x008020e7                PROVIDE (__bss_end, .)
-                0x00000660                __data_load_start = LOADADDR (.data)
-                0x0000066a                __data_load_end = (__data_load_start + SIZEOF (.data))
+                0x00802047                Upper16bitWord
+                0x00802049                newPacketFlag
+                0x0080204a                pitchAxis
+                0x0080207a                throttleAxis
+                0x008020aa                p_term
+                0x008020ac                i_term
+                0x008020ae                UM6_EulerYaw
+                0x008020b0                systemData
+                0x008020d0                spiMasterE
+                0x008020d7                d_term
+                0x008020d9                yawAxis
+                0x00802109                int16counter
+                0x0080210b                slope
+                0x0080210d                Lower16bitWord
+                0x0080210f                PROVIDE (__bss_end, .)
+                0x00000756                __data_load_start = LOADADDR (.data)
+                0x00000760                __data_load_end = (__data_load_start + SIZEOF (.data))
 
-.noinit         0x008020e7        0x0
-                0x008020e7                PROVIDE (__noinit_start, .)
+.noinit         0x0080210f        0x0
+                0x0080210f                PROVIDE (__noinit_start, .)
  *(.noinit*)
-                0x008020e7                PROVIDE (__noinit_end, .)
-                0x008020e7                _end = .
-                0x008020e7                PROVIDE (__heap_start, .)
+                0x0080210f                PROVIDE (__noinit_end, .)
+                0x0080210f                _end = .
+                0x0080210f                PROVIDE (__heap_start, .)
 
 .eeprom         0x00810000        0x0
  *(.eeprom*)
@@ -820,36 +822,36 @@ LOAD c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.876/avr8
 .debug_pubnames
  *(.debug_pubnames)
 
-.debug_info     0x00000000     0x391b
+.debug_info     0x00000000     0x3a12
  *(.debug_info)
- .debug_info    0x00000000     0x38e8 UM6_test.o
- .debug_info    0x000038e8       0x33 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.876/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avrxmega7\libc.a(errno.o)
+ .debug_info    0x00000000     0x39df UM6_test.o
+ .debug_info    0x000039df       0x33 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.876/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avrxmega7\libc.a(errno.o)
  *(.gnu.linkonce.wi.*)
 
-.debug_abbrev   0x00000000      0x506
+.debug_abbrev   0x00000000      0x515
  *(.debug_abbrev)
- .debug_abbrev  0x00000000      0x4dc UM6_test.o
- .debug_abbrev  0x000004dc       0x2a c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.876/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avrxmega7\libc.a(errno.o)
+ .debug_abbrev  0x00000000      0x4eb UM6_test.o
+ .debug_abbrev  0x000004eb       0x2a c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.876/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avrxmega7\libc.a(errno.o)
 
-.debug_line     0x00000000      0xbc8
+.debug_line     0x00000000      0xbd3
  *(.debug_line)
- .debug_line    0x00000000      0xb5d UM6_test.o
- .debug_line    0x00000b5d       0x6b c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.876/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avrxmega7\libc.a(errno.o)
+ .debug_line    0x00000000      0xb68 UM6_test.o
+ .debug_line    0x00000b68       0x6b c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.876/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avrxmega7\libc.a(errno.o)
 
-.debug_frame    0x00000000      0x7a4
+.debug_frame    0x00000000      0x7c0
  *(.debug_frame)
- .debug_frame   0x00000000      0x7a4 UM6_test.o
+ .debug_frame   0x00000000      0x7c0 UM6_test.o
 
-.debug_str      0x00000000     0x2800
+.debug_str      0x00000000     0x28a4
  *(.debug_str)
- .debug_str     0x00000000     0x27b2 UM6_test.o
-                               0x2845 (size before relaxing)
- .debug_str     0x000027b2       0x4e c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.876/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avrxmega7\libc.a(errno.o)
+ .debug_str     0x00000000     0x2856 UM6_test.o
+                               0x28e9 (size before relaxing)
+ .debug_str     0x00002856       0x4e c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.876/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avrxmega7\libc.a(errno.o)
                                  0x60 (size before relaxing)
 
-.debug_loc      0x00000000     0x1bdf
+.debug_loc      0x00000000     0x1c2d
  *(.debug_loc)
- .debug_loc     0x00000000     0x1bdf UM6_test.o
+ .debug_loc     0x00000000     0x1c2d UM6_test.o
 
 .debug_macinfo
  *(.debug_macinfo)

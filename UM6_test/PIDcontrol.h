@@ -41,8 +41,27 @@ typedef struct PID_data
 	int16_t previousPosition0;
 	int16_t previousPosition1;
 	int16_t previousPosition2;
+	int16_t thrust;
 	
 } PID_data_t ;
+
+
+typedef struct SystemData
+{
+	
+	float temperature;
+	float GPS_Longitude;
+	int32_t GPS_Lattitude;
+	float GPS_Altitude;
+	float GPS_Position_N;
+	float GPS_Position_E;
+	float GPS_Position_H;
+	float GPS_Course_Speed;
+	
+	
+
+} System_data_t;
+
 
 void pid_rate(PID_data_t * pid_data) 
 {

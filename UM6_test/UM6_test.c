@@ -26,7 +26,12 @@
 #define NUM_CMD_BYTES		    32
 #define SCALE_THROTTLE			4
 #define END_PACKET_CHAR			0xCC
-
+#define upperByte16(x) (MASK_TOP_BYTE & (x >> 8))		// get the top 8 bits of a 16 bit word
+#define lowerByte16(x) (MASK_TOP_BYTE & x)				// get the lower 8 bits of a 16 bit word
+#define byte_4_32(x) (x >> 24)						// get the top 8 bits of a 16 bit word
+#define byte_3_32(x) (x >> 16)						// get the top 8 bits of a 16 bit word
+#define byte_2_32(x) (x >> 8)							// get the top 8 bits of a 16 bit word
+#define byte_1_32(x) (x)							// get the top 8 bits of a 16 bit word
 
 
 void init32MHzClock(void);
@@ -44,6 +49,7 @@ void Get_DMA_DATA( volatile DMA_CH_t * channel );
 int16_t int16counter;
 uint8_t newPacketFlag;
 PID_data_t rollAxis,yawAxis,pitchAxis,throttleAxis;
+System_data_t systemData;
 uint16_t sendDataLoopCounter = 0;
 int commandTicker = 0;
 //  buffer for DMA data
@@ -51,6 +57,23 @@ static char Rx_Buf[NUM_CMD_BYTES];
 
 
 
+
+//  runs on interrupt every 3.5mSec,250Hz
+void ControlLoop()
+{
+	UpdateEulerAngles();
+	//pid_attitude(&rollAxis);
+	//SetPulseWidths();
+	int16counter++;
+	if (int16counter >= 7)						// 3.5*2 = 7
+	{
+		WriteToPC_SPI();
+		//sendUM6_Data();
+		int16counter = 0;
+		
+	}
+	
+}
 
 int main(void)
 {
@@ -84,23 +107,6 @@ int main(void)
 	 
 }	
 
-
-//  runs on interrupt every 3.5mSec,250Hz
-void ControlLoop()
-{
-	UpdateEulerAngles();
-	//pid_attitude(&rollAxis);
-	//SetPulseWidths();
-	int16counter++;
-	if (int16counter >= 7)						// 3.5*2 = 7
-	{
-		WriteToPC_SPI();
-		//sendUM6_Data();
-		int16counter = 0;
-		
-	}
-	
-}
 
 void SetPulseWidths()
 {
@@ -174,29 +180,65 @@ void UpdateEulerAngles()
 }
 
 
+//void WriteToPC_SPI()
+//{
+		//PORTE.OUTCLR = PIN4_bm;
+//
+		//uint8_t dummy_read;
+//
+		//dummy_read = spiPC_write_read(MASK_TOP_BYTE & (rollAxis.attitude_feedback >> 8));
+		//dummy_read = spiPC_write_read(MASK_TOP_BYTE & rollAxis.attitude_feedback);
+	//
+		//dummy_read = spiPC_write_read(MASK_TOP_BYTE & (pitchAxis.attitude_feedback >> 8));
+		//dummy_read = spiPC_write_read(MASK_TOP_BYTE & pitchAxis.attitude_feedback);
+	//
+		//dummy_read = spiPC_write_read(MASK_TOP_BYTE & (yawAxis.attitude_feedback >> 8));
+		//dummy_read = spiPC_write_read(MASK_TOP_BYTE & yawAxis.attitude_feedback);
+			//
+		//dummy_read = spiPC_write_read(END_PACKET_CHAR);
+		//dummy_read = spiPC_write_read(END_PACKET_CHAR);
+//;
+	//
+		//PORTE.OUTSET = PIN4_bm;
+		////PORTA.OUTTGL = 0x00000001;
+		//
+//}
+
+
 void WriteToPC_SPI()
 {
-		PORTE.OUTCLR = PIN4_bm;
+	PORTE.OUTCLR = PIN4_bm;
+	systemData.GPS_Lattitude = 0x00001000;
+	uint8_t dummy_read;
+	
+	throttleAxis.thrust = spiPC_write_read(upperByte16(throttleAxis.thrust )) << 8;
+	throttleAxis.thrust += spiPC_write_read(lowerByte16(throttleAxis.thrust ));
+	
+	rollAxis.attitude_command = spiPC_write_read(upperByte16(rollAxis.attitude_feedback)) << 8;
+	rollAxis.attitude_command  += spiPC_write_read(lowerByte16(rollAxis.attitude_feedback));
+	
+	pitchAxis.attitude_command = spiPC_write_read(upperByte16(pitchAxis.attitude_feedback)) << 8;
+	pitchAxis.attitude_command += spiPC_write_read(lowerByte16(pitchAxis.attitude_feedback));
+	
+	yawAxis.attitude_command = spiPC_write_read(upperByte16(yawAxis.attitude_feedback)) << 8;
+	yawAxis.attitude_command += spiPC_write_read(lowerByte16(yawAxis.attitude_feedback));
 
-		uint8_t dummy_read;
-
-		dummy_read = spiPC_write_read(MASK_TOP_BYTE & (rollAxis.attitude_feedback >> 8));
-		dummy_read = spiPC_write_read(MASK_TOP_BYTE & rollAxis.attitude_feedback);
 	
-		dummy_read = spiPC_write_read(MASK_TOP_BYTE & (pitchAxis.attitude_feedback >> 8));
-		dummy_read = spiPC_write_read(MASK_TOP_BYTE & pitchAxis.attitude_feedback);
+	dummy_read += spiPC_write_read(byte_4_32(systemData.GPS_Lattitude));
+	dummy_read += spiPC_write_read(byte_3_32(systemData.GPS_Lattitude));
+	dummy_read += spiPC_write_read(byte_2_32(systemData.GPS_Lattitude));
+	dummy_read += spiPC_write_read(byte_1_32(systemData.GPS_Lattitude));
 	
-		dummy_read = spiPC_write_read(MASK_TOP_BYTE & (yawAxis.attitude_feedback >> 8));
-		dummy_read = spiPC_write_read(MASK_TOP_BYTE & yawAxis.attitude_feedback);
-			
-		dummy_read = spiPC_write_read(END_PACKET_CHAR);
-		dummy_read = spiPC_write_read(END_PACKET_CHAR);
-;
+	dummy_read = spiPC_write_read(END_PACKET_CHAR);
+	dummy_read = spiPC_write_read(END_PACKET_CHAR);
 	
-		PORTE.OUTSET = PIN4_bm;
-		//PORTA.OUTTGL = 0x00000001;
-		
+	
+	PORTE.OUTSET = PIN4_bm;
+	//PORTA.OUTTGL = 0x00000001;
+	
 }
+
+
 
 
 //send 16 bit data on USART, 2 bytes
@@ -210,10 +252,10 @@ void sendData_int16_t(int16_t sendthis)
 // send 32 bit data on USART, 4 bytes
 void sendData_int32_t(int32_t sendthis)
 {
-	put_USART_PC_char( MASK_TOP_BYTE & (sendthis >> 24));
-	put_USART_PC_char( MASK_TOP_BYTE & (sendthis >> 16));
-	put_USART_PC_char( MASK_TOP_BYTE & (sendthis >> 8));
-	put_USART_PC_char (MASK_TOP_BYTE & sendthis);
+	put_USART_PC_char(  (sendthis >> 24));
+	put_USART_PC_char(   (sendthis >> 16));
+	put_USART_PC_char(   (sendthis >> 8));
+	put_USART_PC_char (  sendthis);
 }
 
 void sendUM6_Data()
