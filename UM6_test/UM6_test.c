@@ -65,7 +65,7 @@ void ControlLoop()
 	//pid_attitude(&rollAxis);
 	//SetPulseWidths();
 	int16counter++;
-	if (int16counter >= 7)						// 3.5*2 = 7
+	if (int16counter >= 30)						//
 	{
 		WriteToPC_SPI();
 		//sendUM6_Data();

@@ -422,7 +422,7 @@ LOAD c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.876/avr8
 .rela.plt
  *(.rela.plt)
 
-.text           0x00000000      0x756
+.text           0x00000000      0x75e
  *(.vectors)
  .vectors       0x00000000      0x1f4 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.876/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avrxmega7/crtx128a1.o
                 0x00000000                __vector_default
@@ -608,56 +608,56 @@ LOAD c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.876/avr8
                 0x00000244       0x54 UM6_test.o
                 0x00000244                SPI_MasterInit
  .text.spi_set_up
-                0x00000298       0x62 UM6_test.o
+                0x00000298       0x6a UM6_test.o
                 0x00000298                spi_set_up
  .text.spi_write_read
-                0x000002fa       0x14 UM6_test.o
-                0x000002fa                spi_write_read
+                0x00000302       0x14 UM6_test.o
+                0x00000302                spi_write_read
  .text.spiPC_write_read
-                0x0000030e       0x14 UM6_test.o
-                0x0000030e                spiPC_write_read
+                0x00000316       0x14 UM6_test.o
+                0x00000316                spiPC_write_read
  .text.ZeroGyros
-                0x00000322        0xe UM6_test.o
-                0x00000322                ZeroGyros
+                0x0000032a        0xe UM6_test.o
+                0x0000032a                ZeroGyros
  .text.ZeroAccelerometers
-                0x00000330        0xe UM6_test.o
-                0x00000330                ZeroAccelerometers
+                0x00000338        0xe UM6_test.o
+                0x00000338                ZeroAccelerometers
  .text.TC0_ConfigClockSource
-                0x0000033e        0xc UM6_test.o
-                0x0000033e                TC0_ConfigClockSource
- .text.initPWM  0x0000034a       0x58 UM6_test.o
-                0x0000034a                initPWM
+                0x00000346        0xc UM6_test.o
+                0x00000346                TC0_ConfigClockSource
+ .text.initPWM  0x00000352       0x58 UM6_test.o
+                0x00000352                initPWM
  .text.UpdateEulerAngles
-                0x000003a2       0x88 UM6_test.o
-                0x000003a2                UpdateEulerAngles
+                0x000003aa       0x88 UM6_test.o
+                0x000003aa                UpdateEulerAngles
  .text.WriteToPC_SPI
-                0x0000042a      0x162 UM6_test.o
-                0x0000042a                WriteToPC_SPI
+                0x00000432      0x162 UM6_test.o
+                0x00000432                WriteToPC_SPI
  .text.ControlLoop
-                0x0000058c       0x28 UM6_test.o
-                0x0000058c                ControlLoop
+                0x00000594       0x28 UM6_test.o
+                0x00000594                ControlLoop
  .text.init32MHzClock
-                0x000005b4       0x1c UM6_test.o
-                0x000005b4                init32MHzClock
+                0x000005bc       0x1c UM6_test.o
+                0x000005bc                init32MHzClock
  .text.initUART
-                0x000005d0       0x32 UM6_test.o
-                0x000005d0                initUART
+                0x000005d8       0x32 UM6_test.o
+                0x000005d8                initUART
  .text.intPID_gains
-                0x00000602       0x66 UM6_test.o
-                0x00000602                intPID_gains
+                0x0000060a       0x66 UM6_test.o
+                0x0000060a                intPID_gains
  .text.intiLoopTimer
-                0x00000668       0x22 UM6_test.o
-                0x00000668                intiLoopTimer
- .text.main     0x0000068a       0x5a UM6_test.o
-                0x0000068a                main
+                0x00000670       0x22 UM6_test.o
+                0x00000670                intiLoopTimer
+ .text.main     0x00000692       0x5a UM6_test.o
+                0x00000692                main
  .text.__vector_77
-                0x000006e4       0x6e UM6_test.o
-                0x000006e4                __vector_77
-                0x00000752                . = ALIGN (0x2)
+                0x000006ec       0x6e UM6_test.o
+                0x000006ec                __vector_77
+                0x0000075a                . = ALIGN (0x2)
  *(.fini9)
- .fini9         0x00000752        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.876/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avrxmega7\libgcc.a(_exit.o)
-                0x00000752                _exit
-                0x00000752                exit
+ .fini9         0x0000075a        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.876/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avrxmega7\libgcc.a(_exit.o)
+                0x0000075a                _exit
+                0x0000075a                exit
  *(.fini9)
  *(.fini8)
  *(.fini8)
@@ -676,11 +676,11 @@ LOAD c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.876/avr8
  *(.fini1)
  *(.fini1)
  *(.fini0)
- .fini0         0x00000752        0x4 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.876/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avrxmega7\libgcc.a(_exit.o)
+ .fini0         0x0000075a        0x4 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.876/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/avrxmega7\libgcc.a(_exit.o)
  *(.fini0)
-                0x00000756                _etext = .
+                0x0000075e                _etext = .
 
-.data           0x00802000        0xa load address 0x00000756
+.data           0x00802000        0xa load address 0x0000075e
                 0x00802000                PROVIDE (__data_start, .)
  *(.data)
  .data          0x00802000        0x0 c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.876/avr8-gnu-toolchain/bin/../lib/gcc/avr/4.7.2/../../../../avr/lib/avrxmega7/crtx128a1.o
@@ -739,8 +739,8 @@ LOAD c:/program files (x86)/atmel/atmel toolchain/avr8 gcc/native/3.4.2.876/avr8
                 0x0080210b                slope
                 0x0080210d                Lower16bitWord
                 0x0080210f                PROVIDE (__bss_end, .)
-                0x00000756                __data_load_start = LOADADDR (.data)
-                0x00000760                __data_load_end = (__data_load_start + SIZEOF (.data))
+                0x0000075e                __data_load_start = LOADADDR (.data)
+                0x00000768                __data_load_end = (__data_load_start + SIZEOF (.data))
 
 .noinit         0x0080210f        0x0
                 0x0080210f                PROVIDE (__noinit_start, .)
