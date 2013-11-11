@@ -224,10 +224,10 @@ void WriteToPC_SPI()
 	yawAxis.attitude_command += spiPC_write_read(lowerByte16(yawAxis.attitude_feedback));
 
 	
-	dummy_read += spiPC_write_read(byte_4_32(systemData.GPS_Lattitude));
-	dummy_read += spiPC_write_read(byte_3_32(systemData.GPS_Lattitude));
-	dummy_read += spiPC_write_read(byte_2_32(systemData.GPS_Lattitude));
-	dummy_read += spiPC_write_read(byte_1_32(systemData.GPS_Lattitude));
+	//dummy_read += spiPC_write_read(byte_4_32(systemData.GPS_Lattitude));
+	//dummy_read += spiPC_write_read(byte_3_32(systemData.GPS_Lattitude));
+	//dummy_read += spiPC_write_read(byte_2_32(systemData.GPS_Lattitude));
+	//dummy_read += spiPC_write_read(byte_1_32(systemData.GPS_Lattitude));
 	
 	dummy_read = spiPC_write_read(END_PACKET_CHAR);
 	dummy_read = spiPC_write_read(END_PACKET_CHAR);

@@ -3,33 +3,33 @@ UM6_test.elf:     file format elf32-avr
 
 Sections:
 Idx Name          Size      VMA       LMA       File off  Algn
-  0 .text         0000075e  00000000  00000000  00000094  2**1
+  0 .text         00000742  00000000  00000000  00000094  2**1
                   CONTENTS, ALLOC, LOAD, READONLY, CODE
-  1 .data         0000000a  00802000  0000075e  000007f2  2**0
+  1 .data         0000000a  00802000  00000742  000007d6  2**0
                   CONTENTS, ALLOC, LOAD, DATA
-  2 .bss          00000105  0080200a  0080200a  000007fc  2**0
+  2 .bss          00000105  0080200a  0080200a  000007e0  2**0
                   ALLOC
-  3 .stab         0000075c  00000000  00000000  000007fc  2**2
+  3 .stab         0000075c  00000000  00000000  000007e0  2**2
                   CONTENTS, READONLY, DEBUGGING
-  4 .stabstr      00000129  00000000  00000000  00000f58  2**0
+  4 .stabstr      00000129  00000000  00000000  00000f3c  2**0
                   CONTENTS, READONLY, DEBUGGING
-  5 .comment      0000002f  00000000  00000000  00001081  2**0
+  5 .comment      0000002f  00000000  00000000  00001065  2**0
                   CONTENTS, READONLY
-  6 .debug_aranges 000002d8  00000000  00000000  000010b0  2**0
+  6 .debug_aranges 000002d8  00000000  00000000  00001094  2**0
                   CONTENTS, READONLY, DEBUGGING
-  7 .debug_info   00003a12  00000000  00000000  00001388  2**0
+  7 .debug_info   000039ee  00000000  00000000  0000136c  2**0
                   CONTENTS, READONLY, DEBUGGING
-  8 .debug_abbrev 00000515  00000000  00000000  00004d9a  2**0
+  8 .debug_abbrev 00000515  00000000  00000000  00004d5a  2**0
                   CONTENTS, READONLY, DEBUGGING
-  9 .debug_line   00000bd3  00000000  00000000  000052af  2**0
+  9 .debug_line   00000bcf  00000000  00000000  0000526f  2**0
                   CONTENTS, READONLY, DEBUGGING
- 10 .debug_frame  000007c0  00000000  00000000  00005e84  2**2
+ 10 .debug_frame  000007b8  00000000  00000000  00005e40  2**2
                   CONTENTS, READONLY, DEBUGGING
- 11 .debug_str    000028a4  00000000  00000000  00006644  2**0
+ 11 .debug_str    000028a4  00000000  00000000  000065f8  2**0
                   CONTENTS, READONLY, DEBUGGING
- 12 .debug_loc    00001c2d  00000000  00000000  00008ee8  2**0
+ 12 .debug_loc    00001c13  00000000  00000000  00008e9c  2**0
                   CONTENTS, READONLY, DEBUGGING
- 13 .debug_ranges 000002b0  00000000  00000000  0000ab15  2**0
+ 13 .debug_ranges 000002b0  00000000  00000000  0000aaaf  2**0
                   CONTENTS, READONLY, DEBUGGING
 
 Disassembly of section .text:
@@ -112,7 +112,7 @@ Disassembly of section .text:
  128:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
  12c:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
  130:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
- 134:	0c 94 76 03 	jmp	0x6ec	; 0x6ec <__vector_77>
+ 134:	0c 94 68 03 	jmp	0x6d0	; 0x6d0 <__vector_77>
  138:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
  13c:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
  140:	0c 94 20 01 	jmp	0x240	; 0x240 <__bad_interrupt>
@@ -179,7 +179,7 @@ Disassembly of section .text:
  20c:	10 e2       	ldi	r17, 0x20	; 32
  20e:	a0 e0       	ldi	r26, 0x00	; 0
  210:	b0 e2       	ldi	r27, 0x20	; 32
- 212:	ee e5       	ldi	r30, 0x5E	; 94
+ 212:	e2 e4       	ldi	r30, 0x42	; 66
  214:	f7 e0       	ldi	r31, 0x07	; 7
  216:	00 e0       	ldi	r16, 0x00	; 0
  218:	0b bf       	out	0x3b, r16	; 59
@@ -204,8 +204,8 @@ Disassembly of section .text:
  232:	af 30       	cpi	r26, 0x0F	; 15
  234:	b2 07       	cpc	r27, r18
  236:	e1 f7       	brne	.-8      	; 0x230 <.do_clear_bss_loop>
- 238:	0e 94 49 03 	call	0x692	; 0x692 <main>
- 23c:	0c 94 ad 03 	jmp	0x75a	; 0x75a <_exit>
+ 238:	0e 94 3b 03 	call	0x676	; 0x676 <main>
+ 23c:	0c 94 9f 03 	jmp	0x73e	; 0x73e <_exit>
 
 00000240 <__bad_interrupt>:
  240:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
@@ -617,528 +617,512 @@ void UpdateEulerAngles()
 
 void WriteToPC_SPI()
 {
- 432:	8f 92       	push	r8
- 434:	9f 92       	push	r9
- 436:	af 92       	push	r10
- 438:	bf 92       	push	r11
- 43a:	df 92       	push	r13
- 43c:	ef 92       	push	r14
- 43e:	ff 92       	push	r15
- 440:	0f 93       	push	r16
- 442:	1f 93       	push	r17
- 444:	cf 93       	push	r28
- 446:	df 93       	push	r29
+ 432:	af 92       	push	r10
+ 434:	bf 92       	push	r11
+ 436:	df 92       	push	r13
+ 438:	ef 92       	push	r14
+ 43a:	ff 92       	push	r15
+ 43c:	0f 93       	push	r16
+ 43e:	1f 93       	push	r17
+ 440:	cf 93       	push	r28
+ 442:	df 93       	push	r29
 	PORTE.OUTCLR = PIN4_bm;
- 448:	0f 2e       	mov	r0, r31
- 44a:	f0 e8       	ldi	r31, 0x80	; 128
- 44c:	ef 2e       	mov	r14, r31
- 44e:	f6 e0       	ldi	r31, 0x06	; 6
- 450:	ff 2e       	mov	r15, r31
- 452:	f0 2d       	mov	r31, r0
- 454:	68 94       	set
- 456:	dd 24       	eor	r13, r13
- 458:	d4 f8       	bld	r13, 4
- 45a:	f7 01       	movw	r30, r14
- 45c:	d6 82       	std	Z+6, r13	; 0x06
+ 444:	00 e8       	ldi	r16, 0x80	; 128
+ 446:	16 e0       	ldi	r17, 0x06	; 6
+ 448:	68 94       	set
+ 44a:	dd 24       	eor	r13, r13
+ 44c:	d4 f8       	bld	r13, 4
+ 44e:	f8 01       	movw	r30, r16
+ 450:	d6 82       	std	Z+6, r13	; 0x06
 	systemData.GPS_Lattitude = 0x00001000;
- 45e:	c8 eb       	ldi	r28, 0xB8	; 184
- 460:	d0 e2       	ldi	r29, 0x20	; 32
- 462:	80 e0       	ldi	r24, 0x00	; 0
- 464:	90 e1       	ldi	r25, 0x10	; 16
- 466:	a0 e0       	ldi	r26, 0x00	; 0
- 468:	b0 e0       	ldi	r27, 0x00	; 0
- 46a:	88 83       	st	Y, r24
- 46c:	99 83       	std	Y+1, r25	; 0x01
- 46e:	aa 83       	std	Y+2, r26	; 0x02
- 470:	bb 83       	std	Y+3, r27	; 0x03
+ 452:	80 e0       	ldi	r24, 0x00	; 0
+ 454:	90 e1       	ldi	r25, 0x10	; 16
+ 456:	a0 e0       	ldi	r26, 0x00	; 0
+ 458:	b0 e0       	ldi	r27, 0x00	; 0
+ 45a:	80 93 b8 20 	sts	0x20B8, r24
+ 45e:	90 93 b9 20 	sts	0x20B9, r25
+ 462:	a0 93 ba 20 	sts	0x20BA, r26
+ 466:	b0 93 bb 20 	sts	0x20BB, r27
 	uint8_t dummy_read;
 	
 	throttleAxis.thrust = spiPC_write_read(upperByte16(throttleAxis.thrust )) << 8;
- 472:	0f 2e       	mov	r0, r31
- 474:	f8 ea       	ldi	r31, 0xA8	; 168
- 476:	af 2e       	mov	r10, r31
- 478:	f0 e2       	ldi	r31, 0x20	; 32
- 47a:	bf 2e       	mov	r11, r31
- 47c:	f0 2d       	mov	r31, r0
- 47e:	f5 01       	movw	r30, r10
- 480:	81 81       	ldd	r24, Z+1	; 0x01
- 482:	0e 94 8b 01 	call	0x316	; 0x316 <spiPC_write_read>
- 486:	18 2f       	mov	r17, r24
- 488:	00 e0       	ldi	r16, 0x00	; 0
- 48a:	f5 01       	movw	r30, r10
- 48c:	00 83       	st	Z, r16
- 48e:	11 83       	std	Z+1, r17	; 0x01
+ 46a:	0f 2e       	mov	r0, r31
+ 46c:	f8 ea       	ldi	r31, 0xA8	; 168
+ 46e:	ef 2e       	mov	r14, r31
+ 470:	f0 e2       	ldi	r31, 0x20	; 32
+ 472:	ff 2e       	mov	r15, r31
+ 474:	f0 2d       	mov	r31, r0
+ 476:	f7 01       	movw	r30, r14
+ 478:	81 81       	ldd	r24, Z+1	; 0x01
+ 47a:	0e 94 8b 01 	call	0x316	; 0x316 <spiPC_write_read>
+ 47e:	d8 2f       	mov	r29, r24
+ 480:	f0 e0       	ldi	r31, 0x00	; 0
+ 482:	cf 2f       	mov	r28, r31
+ 484:	f7 01       	movw	r30, r14
+ 486:	c0 83       	st	Z, r28
+ 488:	d1 83       	std	Z+1, r29	; 0x01
 	throttleAxis.thrust += spiPC_write_read(lowerByte16(throttleAxis.thrust ));
- 490:	80 e0       	ldi	r24, 0x00	; 0
- 492:	0e 94 8b 01 	call	0x316	; 0x316 <spiPC_write_read>
- 496:	08 0f       	add	r16, r24
- 498:	11 1d       	adc	r17, r1
- 49a:	f5 01       	movw	r30, r10
- 49c:	00 83       	st	Z, r16
- 49e:	11 83       	std	Z+1, r17	; 0x01
+ 48a:	80 e0       	ldi	r24, 0x00	; 0
+ 48c:	0e 94 8b 01 	call	0x316	; 0x316 <spiPC_write_read>
+ 490:	c8 0f       	add	r28, r24
+ 492:	d1 1d       	adc	r29, r1
+ 494:	f7 01       	movw	r30, r14
+ 496:	c0 83       	st	Z, r28
+ 498:	d1 83       	std	Z+1, r29	; 0x01
 	
 	rollAxis.attitude_command = spiPC_write_read(upperByte16(rollAxis.attitude_feedback)) << 8;
- 4a0:	0f 2e       	mov	r0, r31
- 4a2:	f3 e2       	ldi	r31, 0x23	; 35
- 4a4:	8f 2e       	mov	r8, r31
- 4a6:	f0 e2       	ldi	r31, 0x20	; 32
- 4a8:	9f 2e       	mov	r9, r31
- 4aa:	f0 2d       	mov	r31, r0
- 4ac:	f4 01       	movw	r30, r8
- 4ae:	81 81       	ldd	r24, Z+1	; 0x01
- 4b0:	0e 94 8b 01 	call	0x316	; 0x316 <spiPC_write_read>
- 4b4:	18 2f       	mov	r17, r24
- 4b6:	00 e0       	ldi	r16, 0x00	; 0
- 4b8:	0f 2e       	mov	r0, r31
- 4ba:	f7 e2       	ldi	r31, 0x27	; 39
- 4bc:	af 2e       	mov	r10, r31
- 4be:	f0 e2       	ldi	r31, 0x20	; 32
- 4c0:	bf 2e       	mov	r11, r31
- 4c2:	f0 2d       	mov	r31, r0
- 4c4:	f5 01       	movw	r30, r10
- 4c6:	00 83       	st	Z, r16
- 4c8:	11 83       	std	Z+1, r17	; 0x01
+ 49a:	0f 2e       	mov	r0, r31
+ 49c:	f3 e2       	ldi	r31, 0x23	; 35
+ 49e:	af 2e       	mov	r10, r31
+ 4a0:	f0 e2       	ldi	r31, 0x20	; 32
+ 4a2:	bf 2e       	mov	r11, r31
+ 4a4:	f0 2d       	mov	r31, r0
+ 4a6:	f5 01       	movw	r30, r10
+ 4a8:	81 81       	ldd	r24, Z+1	; 0x01
+ 4aa:	0e 94 8b 01 	call	0x316	; 0x316 <spiPC_write_read>
+ 4ae:	d8 2f       	mov	r29, r24
+ 4b0:	f0 e0       	ldi	r31, 0x00	; 0
+ 4b2:	cf 2f       	mov	r28, r31
+ 4b4:	0f 2e       	mov	r0, r31
+ 4b6:	f7 e2       	ldi	r31, 0x27	; 39
+ 4b8:	ef 2e       	mov	r14, r31
+ 4ba:	f0 e2       	ldi	r31, 0x20	; 32
+ 4bc:	ff 2e       	mov	r15, r31
+ 4be:	f0 2d       	mov	r31, r0
+ 4c0:	f7 01       	movw	r30, r14
+ 4c2:	c0 83       	st	Z, r28
+ 4c4:	d1 83       	std	Z+1, r29	; 0x01
 	rollAxis.attitude_command  += spiPC_write_read(lowerByte16(rollAxis.attitude_feedback));
- 4ca:	f4 01       	movw	r30, r8
- 4cc:	80 81       	ld	r24, Z
- 4ce:	0e 94 8b 01 	call	0x316	; 0x316 <spiPC_write_read>
- 4d2:	08 0f       	add	r16, r24
- 4d4:	11 1d       	adc	r17, r1
- 4d6:	f5 01       	movw	r30, r10
- 4d8:	00 83       	st	Z, r16
- 4da:	11 83       	std	Z+1, r17	; 0x01
+ 4c6:	f5 01       	movw	r30, r10
+ 4c8:	80 81       	ld	r24, Z
+ 4ca:	0e 94 8b 01 	call	0x316	; 0x316 <spiPC_write_read>
+ 4ce:	c8 0f       	add	r28, r24
+ 4d0:	d1 1d       	adc	r29, r1
+ 4d2:	f7 01       	movw	r30, r14
+ 4d4:	c0 83       	st	Z, r28
+ 4d6:	d1 83       	std	Z+1, r29	; 0x01
 	
 	pitchAxis.attitude_command = spiPC_write_read(upperByte16(pitchAxis.attitude_feedback)) << 8;
- 4dc:	0f 2e       	mov	r0, r31
- 4de:	f6 e5       	ldi	r31, 0x56	; 86
- 4e0:	8f 2e       	mov	r8, r31
- 4e2:	f0 e2       	ldi	r31, 0x20	; 32
- 4e4:	9f 2e       	mov	r9, r31
- 4e6:	f0 2d       	mov	r31, r0
- 4e8:	f4 01       	movw	r30, r8
- 4ea:	81 81       	ldd	r24, Z+1	; 0x01
- 4ec:	0e 94 8b 01 	call	0x316	; 0x316 <spiPC_write_read>
- 4f0:	18 2f       	mov	r17, r24
- 4f2:	00 e0       	ldi	r16, 0x00	; 0
- 4f4:	0f 2e       	mov	r0, r31
- 4f6:	fa e5       	ldi	r31, 0x5A	; 90
- 4f8:	af 2e       	mov	r10, r31
- 4fa:	f0 e2       	ldi	r31, 0x20	; 32
- 4fc:	bf 2e       	mov	r11, r31
- 4fe:	f0 2d       	mov	r31, r0
- 500:	f5 01       	movw	r30, r10
- 502:	00 83       	st	Z, r16
- 504:	11 83       	std	Z+1, r17	; 0x01
+ 4d8:	0f 2e       	mov	r0, r31
+ 4da:	f6 e5       	ldi	r31, 0x56	; 86
+ 4dc:	af 2e       	mov	r10, r31
+ 4de:	f0 e2       	ldi	r31, 0x20	; 32
+ 4e0:	bf 2e       	mov	r11, r31
+ 4e2:	f0 2d       	mov	r31, r0
+ 4e4:	f5 01       	movw	r30, r10
+ 4e6:	81 81       	ldd	r24, Z+1	; 0x01
+ 4e8:	0e 94 8b 01 	call	0x316	; 0x316 <spiPC_write_read>
+ 4ec:	d8 2f       	mov	r29, r24
+ 4ee:	f0 e0       	ldi	r31, 0x00	; 0
+ 4f0:	cf 2f       	mov	r28, r31
+ 4f2:	0f 2e       	mov	r0, r31
+ 4f4:	fa e5       	ldi	r31, 0x5A	; 90
+ 4f6:	ef 2e       	mov	r14, r31
+ 4f8:	f0 e2       	ldi	r31, 0x20	; 32
+ 4fa:	ff 2e       	mov	r15, r31
+ 4fc:	f0 2d       	mov	r31, r0
+ 4fe:	f7 01       	movw	r30, r14
+ 500:	c0 83       	st	Z, r28
+ 502:	d1 83       	std	Z+1, r29	; 0x01
 	pitchAxis.attitude_command += spiPC_write_read(lowerByte16(pitchAxis.attitude_feedback));
- 506:	f4 01       	movw	r30, r8
- 508:	80 81       	ld	r24, Z
- 50a:	0e 94 8b 01 	call	0x316	; 0x316 <spiPC_write_read>
- 50e:	08 0f       	add	r16, r24
- 510:	11 1d       	adc	r17, r1
- 512:	f5 01       	movw	r30, r10
- 514:	00 83       	st	Z, r16
- 516:	11 83       	std	Z+1, r17	; 0x01
+ 504:	f5 01       	movw	r30, r10
+ 506:	80 81       	ld	r24, Z
+ 508:	0e 94 8b 01 	call	0x316	; 0x316 <spiPC_write_read>
+ 50c:	c8 0f       	add	r28, r24
+ 50e:	d1 1d       	adc	r29, r1
+ 510:	f7 01       	movw	r30, r14
+ 512:	c0 83       	st	Z, r28
+ 514:	d1 83       	std	Z+1, r29	; 0x01
 	
 	yawAxis.attitude_command = spiPC_write_read(upperByte16(yawAxis.attitude_feedback)) << 8;
- 518:	0f 2e       	mov	r0, r31
- 51a:	f5 ee       	ldi	r31, 0xE5	; 229
- 51c:	8f 2e       	mov	r8, r31
- 51e:	f0 e2       	ldi	r31, 0x20	; 32
- 520:	9f 2e       	mov	r9, r31
- 522:	f0 2d       	mov	r31, r0
- 524:	f4 01       	movw	r30, r8
- 526:	81 81       	ldd	r24, Z+1	; 0x01
- 528:	0e 94 8b 01 	call	0x316	; 0x316 <spiPC_write_read>
- 52c:	18 2f       	mov	r17, r24
- 52e:	00 e0       	ldi	r16, 0x00	; 0
+ 516:	0f 2e       	mov	r0, r31
+ 518:	f5 ee       	ldi	r31, 0xE5	; 229
+ 51a:	af 2e       	mov	r10, r31
+ 51c:	f0 e2       	ldi	r31, 0x20	; 32
+ 51e:	bf 2e       	mov	r11, r31
+ 520:	f0 2d       	mov	r31, r0
+ 522:	f5 01       	movw	r30, r10
+ 524:	81 81       	ldd	r24, Z+1	; 0x01
+ 526:	0e 94 8b 01 	call	0x316	; 0x316 <spiPC_write_read>
+ 52a:	d8 2f       	mov	r29, r24
+ 52c:	f0 e0       	ldi	r31, 0x00	; 0
+ 52e:	cf 2f       	mov	r28, r31
  530:	0f 2e       	mov	r0, r31
  532:	f9 ee       	ldi	r31, 0xE9	; 233
- 534:	af 2e       	mov	r10, r31
+ 534:	ef 2e       	mov	r14, r31
  536:	f0 e2       	ldi	r31, 0x20	; 32
- 538:	bf 2e       	mov	r11, r31
+ 538:	ff 2e       	mov	r15, r31
  53a:	f0 2d       	mov	r31, r0
- 53c:	f5 01       	movw	r30, r10
- 53e:	00 83       	st	Z, r16
- 540:	11 83       	std	Z+1, r17	; 0x01
+ 53c:	f7 01       	movw	r30, r14
+ 53e:	c0 83       	st	Z, r28
+ 540:	d1 83       	std	Z+1, r29	; 0x01
 	yawAxis.attitude_command += spiPC_write_read(lowerByte16(yawAxis.attitude_feedback));
- 542:	f4 01       	movw	r30, r8
+ 542:	f5 01       	movw	r30, r10
  544:	80 81       	ld	r24, Z
  546:	0e 94 8b 01 	call	0x316	; 0x316 <spiPC_write_read>
- 54a:	08 0f       	add	r16, r24
- 54c:	11 1d       	adc	r17, r1
- 54e:	f5 01       	movw	r30, r10
- 550:	00 83       	st	Z, r16
- 552:	11 83       	std	Z+1, r17	; 0x01
-
+ 54a:	c8 0f       	add	r28, r24
+ 54c:	d1 1d       	adc	r29, r1
+ 54e:	f7 01       	movw	r30, r14
+ 550:	c0 83       	st	Z, r28
+ 552:	d1 83       	std	Z+1, r29	; 0x01
+	//dummy_read += spiPC_write_read(byte_4_32(systemData.GPS_Lattitude));
+	//dummy_read += spiPC_write_read(byte_3_32(systemData.GPS_Lattitude));
+	//dummy_read += spiPC_write_read(byte_2_32(systemData.GPS_Lattitude));
+	//dummy_read += spiPC_write_read(byte_1_32(systemData.GPS_Lattitude));
 	
-	dummy_read += spiPC_write_read(byte_4_32(systemData.GPS_Lattitude));
- 554:	8b 81       	ldd	r24, Y+3	; 0x03
+	dummy_read = spiPC_write_read(END_PACKET_CHAR);
+ 554:	8c ec       	ldi	r24, 0xCC	; 204
  556:	0e 94 8b 01 	call	0x316	; 0x316 <spiPC_write_read>
-	dummy_read += spiPC_write_read(byte_3_32(systemData.GPS_Lattitude));
- 55a:	8a 81       	ldd	r24, Y+2	; 0x02
+	dummy_read = spiPC_write_read(END_PACKET_CHAR);
+ 55a:	8c ec       	ldi	r24, 0xCC	; 204
  55c:	0e 94 8b 01 	call	0x316	; 0x316 <spiPC_write_read>
-	dummy_read += spiPC_write_read(byte_2_32(systemData.GPS_Lattitude));
- 560:	89 81       	ldd	r24, Y+1	; 0x01
- 562:	0e 94 8b 01 	call	0x316	; 0x316 <spiPC_write_read>
-	dummy_read += spiPC_write_read(byte_1_32(systemData.GPS_Lattitude));
- 566:	88 81       	ld	r24, Y
- 568:	0e 94 8b 01 	call	0x316	; 0x316 <spiPC_write_read>
-	
-	dummy_read = spiPC_write_read(END_PACKET_CHAR);
- 56c:	8c ec       	ldi	r24, 0xCC	; 204
- 56e:	0e 94 8b 01 	call	0x316	; 0x316 <spiPC_write_read>
-	dummy_read = spiPC_write_read(END_PACKET_CHAR);
- 572:	8c ec       	ldi	r24, 0xCC	; 204
- 574:	0e 94 8b 01 	call	0x316	; 0x316 <spiPC_write_read>
 	
 	
 	PORTE.OUTSET = PIN4_bm;
- 578:	f7 01       	movw	r30, r14
- 57a:	d5 82       	std	Z+5, r13	; 0x05
+ 560:	f8 01       	movw	r30, r16
+ 562:	d5 82       	std	Z+5, r13	; 0x05
 	//PORTA.OUTTGL = 0x00000001;
 	
 }
- 57c:	df 91       	pop	r29
- 57e:	cf 91       	pop	r28
- 580:	1f 91       	pop	r17
- 582:	0f 91       	pop	r16
- 584:	ff 90       	pop	r15
- 586:	ef 90       	pop	r14
- 588:	df 90       	pop	r13
- 58a:	bf 90       	pop	r11
- 58c:	af 90       	pop	r10
- 58e:	9f 90       	pop	r9
- 590:	8f 90       	pop	r8
- 592:	08 95       	ret
+ 564:	df 91       	pop	r29
+ 566:	cf 91       	pop	r28
+ 568:	1f 91       	pop	r17
+ 56a:	0f 91       	pop	r16
+ 56c:	ff 90       	pop	r15
+ 56e:	ef 90       	pop	r14
+ 570:	df 90       	pop	r13
+ 572:	bf 90       	pop	r11
+ 574:	af 90       	pop	r10
+ 576:	08 95       	ret
 
-00000594 <ControlLoop>:
+00000578 <ControlLoop>:
 
 
 //  runs on interrupt every 3.5mSec,250Hz
 void ControlLoop()
 {
 	UpdateEulerAngles();
- 594:	0e 94 d5 01 	call	0x3aa	; 0x3aa <UpdateEulerAngles>
+ 578:	0e 94 d5 01 	call	0x3aa	; 0x3aa <UpdateEulerAngles>
 	//pid_attitude(&rollAxis);
 	//SetPulseWidths();
 	int16counter++;
- 598:	80 91 09 21 	lds	r24, 0x2109
- 59c:	90 91 0a 21 	lds	r25, 0x210A
- 5a0:	01 96       	adiw	r24, 0x01	; 1
- 5a2:	80 93 09 21 	sts	0x2109, r24
- 5a6:	90 93 0a 21 	sts	0x210A, r25
+ 57c:	80 91 09 21 	lds	r24, 0x2109
+ 580:	90 91 0a 21 	lds	r25, 0x210A
+ 584:	01 96       	adiw	r24, 0x01	; 1
+ 586:	80 93 09 21 	sts	0x2109, r24
+ 58a:	90 93 0a 21 	sts	0x210A, r25
 	if (int16counter >= 30)						//
- 5aa:	4e 97       	sbiw	r24, 0x1e	; 30
- 5ac:	34 f0       	brlt	.+12     	; 0x5ba <ControlLoop+0x26>
+ 58e:	4e 97       	sbiw	r24, 0x1e	; 30
+ 590:	34 f0       	brlt	.+12     	; 0x59e <ControlLoop+0x26>
 	{
 		WriteToPC_SPI();
- 5ae:	0e 94 19 02 	call	0x432	; 0x432 <WriteToPC_SPI>
+ 592:	0e 94 19 02 	call	0x432	; 0x432 <WriteToPC_SPI>
 		//sendUM6_Data();
 		int16counter = 0;
- 5b2:	10 92 09 21 	sts	0x2109, r1
- 5b6:	10 92 0a 21 	sts	0x210A, r1
- 5ba:	08 95       	ret
+ 596:	10 92 09 21 	sts	0x2109, r1
+ 59a:	10 92 0a 21 	sts	0x210A, r1
+ 59e:	08 95       	ret
 
-000005bc <init32MHzClock>:
+000005a0 <init32MHzClock>:
 
 void init32MHzClock(void)
 {
 
 	//	Enable the 32 MHz internal RC oscillator.
 	OSC.CTRL|=OSC_RC32MEN_bm;
- 5bc:	e0 e5       	ldi	r30, 0x50	; 80
- 5be:	f0 e0       	ldi	r31, 0x00	; 0
- 5c0:	80 81       	ld	r24, Z
- 5c2:	82 60       	ori	r24, 0x02	; 2
- 5c4:	80 83       	st	Z, r24
+ 5a0:	e0 e5       	ldi	r30, 0x50	; 80
+ 5a2:	f0 e0       	ldi	r31, 0x00	; 0
+ 5a4:	80 81       	ld	r24, Z
+ 5a6:	82 60       	ori	r24, 0x02	; 2
+ 5a8:	80 83       	st	Z, r24
 	//	The R32MRFY flag is set when the 32 MHz internal RC oscillator is stable
 	//	and ready to be used as the System Clock source.
 	while(!(OSC.STATUS &OSC_RC32MRDY_bm ));
- 5c6:	81 81       	ldd	r24, Z+1	; 0x01
- 5c8:	81 ff       	sbrs	r24, 1
- 5ca:	fd cf       	rjmp	.-6      	; 0x5c6 <init32MHzClock+0xa>
+ 5aa:	81 81       	ldd	r24, Z+1	; 0x01
+ 5ac:	81 ff       	sbrs	r24, 1
+ 5ae:	fd cf       	rjmp	.-6      	; 0x5aa <init32MHzClock+0xa>
 	CCP=CCP_IOREG_gc;
- 5cc:	88 ed       	ldi	r24, 0xD8	; 216
- 5ce:	84 bf       	out	0x34, r24	; 52
+ 5b0:	88 ed       	ldi	r24, 0xD8	; 216
+ 5b2:	84 bf       	out	0x34, r24	; 52
 	//	Select the 32MHz RC oscillator for the system clock
 	CLK.CTRL = CLK_SCLKSEL_RC32M_gc;
- 5d0:	81 e0       	ldi	r24, 0x01	; 1
- 5d2:	80 93 40 00 	sts	0x0040, r24
- 5d6:	08 95       	ret
+ 5b4:	81 e0       	ldi	r24, 0x01	; 1
+ 5b6:	80 93 40 00 	sts	0x0040, r24
+ 5ba:	08 95       	ret
 
-000005d8 <initUART>:
+000005bc <initUART>:
 void initUART()
 {
 	
 	//  XBEE on USARTD1
 	/* PD6 (RXD1) input*/
 	PORTD.DIRCLR = PIN6_bm;
- 5d8:	e0 e6       	ldi	r30, 0x60	; 96
- 5da:	f6 e0       	ldi	r31, 0x06	; 6
- 5dc:	90 e4       	ldi	r25, 0x40	; 64
- 5de:	92 83       	std	Z+2, r25	; 0x02
+ 5bc:	e0 e6       	ldi	r30, 0x60	; 96
+ 5be:	f6 e0       	ldi	r31, 0x06	; 6
+ 5c0:	90 e4       	ldi	r25, 0x40	; 64
+ 5c2:	92 83       	std	Z+2, r25	; 0x02
 	/* PD7 (TXD1) as output. */
 	PORTD.DIRSET = PIN7_bm;
- 5e0:	80 e8       	ldi	r24, 0x80	; 128
- 5e2:	81 83       	std	Z+1, r24	; 0x01
+ 5c4:	80 e8       	ldi	r24, 0x80	; 128
+ 5c6:	81 83       	std	Z+1, r24	; 0x01
 	
 	
 	//  IMU on USARTC1	
 	/* PC6 (RXD1) input*/
 	PORTC.DIRCLR = PIN6_bm;
- 5e4:	e0 e4       	ldi	r30, 0x40	; 64
- 5e6:	f6 e0       	ldi	r31, 0x06	; 6
- 5e8:	92 83       	std	Z+2, r25	; 0x02
+ 5c8:	e0 e4       	ldi	r30, 0x40	; 64
+ 5ca:	f6 e0       	ldi	r31, 0x06	; 6
+ 5cc:	92 83       	std	Z+2, r25	; 0x02
 	/* PD7 (TXD1) as output. */
 	PORTC.DIRSET = PIN7_bm;
- 5ea:	81 83       	std	Z+1, r24	; 0x01
+ 5ce:	81 83       	std	Z+1, r24	; 0x01
 	
 	USART_Format_Set(&XBEE_USART, USART_CHSIZE_8BIT_gc, USART_PMODE_DISABLED_gc, true);
- 5ec:	e0 eb       	ldi	r30, 0xB0	; 176
- 5ee:	f9 e0       	ldi	r31, 0x09	; 9
- 5f0:	8b e0       	ldi	r24, 0x0B	; 11
- 5f2:	85 83       	std	Z+5, r24	; 0x05
+ 5d0:	e0 eb       	ldi	r30, 0xB0	; 176
+ 5d2:	f9 e0       	ldi	r31, 0x09	; 9
+ 5d4:	8b e0       	ldi	r24, 0x0B	; 11
+ 5d6:	85 83       	std	Z+5, r24	; 0x05
 	USART_Baudrate_Set(&XBEE_USART, 1047 , -6);			// set for 32MHZ and 115200
- 5f4:	87 e1       	ldi	r24, 0x17	; 23
- 5f6:	86 83       	std	Z+6, r24	; 0x06
- 5f8:	84 ea       	ldi	r24, 0xA4	; 164
- 5fa:	87 83       	std	Z+7, r24	; 0x07
+ 5d8:	87 e1       	ldi	r24, 0x17	; 23
+ 5da:	86 83       	std	Z+6, r24	; 0x06
+ 5dc:	84 ea       	ldi	r24, 0xA4	; 164
+ 5de:	87 83       	std	Z+7, r24	; 0x07
 	/* Enable both RX and TX. */
 	USART_Rx_Enable(&XBEE_USART);
- 5fc:	84 81       	ldd	r24, Z+4	; 0x04
- 5fe:	80 61       	ori	r24, 0x10	; 16
- 600:	84 83       	std	Z+4, r24	; 0x04
+ 5e0:	84 81       	ldd	r24, Z+4	; 0x04
+ 5e2:	80 61       	ori	r24, 0x10	; 16
+ 5e4:	84 83       	std	Z+4, r24	; 0x04
 	USART_Tx_Enable(&XBEE_USART);
- 602:	84 81       	ldd	r24, Z+4	; 0x04
- 604:	88 60       	ori	r24, 0x08	; 8
- 606:	84 83       	std	Z+4, r24	; 0x04
- 608:	08 95       	ret
+ 5e6:	84 81       	ldd	r24, Z+4	; 0x04
+ 5e8:	88 60       	ori	r24, 0x08	; 8
+ 5ea:	84 83       	std	Z+4, r24	; 0x04
+ 5ec:	08 95       	ret
 
-0000060a <intPID_gains>:
+000005ee <intPID_gains>:
 
 
 void intPID_gains()
 {
 
 	yawAxis.Kp = 0;
- 60a:	10 92 df 20 	sts	0x20DF, r1
- 60e:	10 92 e0 20 	sts	0x20E0, r1
+ 5ee:	10 92 df 20 	sts	0x20DF, r1
+ 5f2:	10 92 e0 20 	sts	0x20E0, r1
 	yawAxis.Ki = 0;
- 612:	10 92 e1 20 	sts	0x20E1, r1
- 616:	10 92 e2 20 	sts	0x20E2, r1
+ 5f6:	10 92 e1 20 	sts	0x20E1, r1
+ 5fa:	10 92 e2 20 	sts	0x20E2, r1
 	yawAxis.Kd = 0;
- 61a:	10 92 e3 20 	sts	0x20E3, r1
- 61e:	10 92 e4 20 	sts	0x20E4, r1
+ 5fe:	10 92 e3 20 	sts	0x20E3, r1
+ 602:	10 92 e4 20 	sts	0x20E4, r1
 	
 	pitchAxis.Kp = 100;
- 622:	84 e6       	ldi	r24, 0x64	; 100
- 624:	90 e0       	ldi	r25, 0x00	; 0
- 626:	80 93 50 20 	sts	0x2050, r24
- 62a:	90 93 51 20 	sts	0x2051, r25
+ 606:	84 e6       	ldi	r24, 0x64	; 100
+ 608:	90 e0       	ldi	r25, 0x00	; 0
+ 60a:	80 93 50 20 	sts	0x2050, r24
+ 60e:	90 93 51 20 	sts	0x2051, r25
 	pitchAxis.Ki = 100;
- 62e:	80 93 52 20 	sts	0x2052, r24
- 632:	90 93 53 20 	sts	0x2053, r25
+ 612:	80 93 52 20 	sts	0x2052, r24
+ 616:	90 93 53 20 	sts	0x2053, r25
 	pitchAxis.Kd = 100;
- 636:	80 93 54 20 	sts	0x2054, r24
- 63a:	90 93 55 20 	sts	0x2055, r25
+ 61a:	80 93 54 20 	sts	0x2054, r24
+ 61e:	90 93 55 20 	sts	0x2055, r25
 	
 	rollAxis.Kp = 0;
- 63e:	10 92 1d 20 	sts	0x201D, r1
- 642:	10 92 1e 20 	sts	0x201E, r1
+ 622:	10 92 1d 20 	sts	0x201D, r1
+ 626:	10 92 1e 20 	sts	0x201E, r1
 	rollAxis.Ki =0;
- 646:	10 92 1f 20 	sts	0x201F, r1
- 64a:	10 92 20 20 	sts	0x2020, r1
+ 62a:	10 92 1f 20 	sts	0x201F, r1
+ 62e:	10 92 20 20 	sts	0x2020, r1
 	rollAxis.Kd =0;
- 64e:	10 92 21 20 	sts	0x2021, r1
- 652:	10 92 22 20 	sts	0x2022, r1
+ 632:	10 92 21 20 	sts	0x2021, r1
+ 636:	10 92 22 20 	sts	0x2022, r1
 	
 	rollAxis.Kp_rate = 100;
- 656:	80 93 17 20 	sts	0x2017, r24
- 65a:	90 93 18 20 	sts	0x2018, r25
+ 63a:	80 93 17 20 	sts	0x2017, r24
+ 63e:	90 93 18 20 	sts	0x2018, r25
 	rollAxis.Ki_rate =100;
- 65e:	80 93 19 20 	sts	0x2019, r24
- 662:	90 93 1a 20 	sts	0x201A, r25
+ 642:	80 93 19 20 	sts	0x2019, r24
+ 646:	90 93 1a 20 	sts	0x201A, r25
 	rollAxis.Kd_rate =100;
- 666:	80 93 1b 20 	sts	0x201B, r24
- 66a:	90 93 1c 20 	sts	0x201C, r25
- 66e:	08 95       	ret
+ 64a:	80 93 1b 20 	sts	0x201B, r24
+ 64e:	90 93 1c 20 	sts	0x201C, r25
+ 652:	08 95       	ret
 
-00000670 <intiLoopTimer>:
+00000654 <intiLoopTimer>:
 void intiLoopTimer()
 {
 	
 
 	// Set the timer to run at the fastest rate. 
 	TCD0.CTRLA = TC_CLKSEL_DIV4_gc;
- 670:	e0 e0       	ldi	r30, 0x00	; 0
- 672:	f9 e0       	ldi	r31, 0x09	; 9
- 674:	83 e0       	ldi	r24, 0x03	; 3
- 676:	80 83       	st	Z, r24
+ 654:	e0 e0       	ldi	r30, 0x00	; 0
+ 656:	f9 e0       	ldi	r31, 0x09	; 9
+ 658:	83 e0       	ldi	r24, 0x03	; 3
+ 65a:	80 83       	st	Z, r24
 
 	/* Configure the timer for normal counting. */
 	TCD0.CTRLB = TC_WGMODE_NORMAL_gc;
- 678:	11 82       	std	Z+1, r1	; 0x01
+ 65c:	11 82       	std	Z+1, r1	; 0x01
 
 	// At 32 MHz/DIV_4 = 8Mhz,  65353 - (8,000,000 * .0035Sec) = 37535 
 	TCD0.PER = 37535;
- 67a:	8f e9       	ldi	r24, 0x9F	; 159
- 67c:	92 e9       	ldi	r25, 0x92	; 146
- 67e:	86 a3       	std	Z+38, r24	; 0x26
- 680:	97 a3       	std	Z+39, r25	; 0x27
+ 65e:	8f e9       	ldi	r24, 0x9F	; 159
+ 660:	92 e9       	ldi	r25, 0x92	; 146
+ 662:	86 a3       	std	Z+38, r24	; 0x26
+ 664:	97 a3       	std	Z+39, r25	; 0x27
 
 	//Configure timer to generate an interrupt on overflow. */
 	TCD0.INTCTRLA = TC_OVFINTLVL_LO_gc;
- 682:	81 e0       	ldi	r24, 0x01	; 1
- 684:	86 83       	std	Z+6, r24	; 0x06
+ 666:	81 e0       	ldi	r24, 0x01	; 1
+ 668:	86 83       	std	Z+6, r24	; 0x06
 
 	/* Enable this interrupt level. */
 	PMIC.CTRL |= PMIC_LOLVLEN_bm;
- 686:	e0 ea       	ldi	r30, 0xA0	; 160
- 688:	f0 e0       	ldi	r31, 0x00	; 0
- 68a:	82 81       	ldd	r24, Z+2	; 0x02
- 68c:	81 60       	ori	r24, 0x01	; 1
- 68e:	82 83       	std	Z+2, r24	; 0x02
- 690:	08 95       	ret
+ 66a:	e0 ea       	ldi	r30, 0xA0	; 160
+ 66c:	f0 e0       	ldi	r31, 0x00	; 0
+ 66e:	82 81       	ldd	r24, Z+2	; 0x02
+ 670:	81 60       	ori	r24, 0x01	; 1
+ 672:	82 83       	std	Z+2, r24	; 0x02
+ 674:	08 95       	ret
 
-00000692 <main>:
+00000676 <main>:
 }
 
 int main(void)
 {
 
 	PORTA.DIRSET = 0xFF;			//  LEDS
- 692:	8f ef       	ldi	r24, 0xFF	; 255
- 694:	e0 e0       	ldi	r30, 0x00	; 0
- 696:	f6 e0       	ldi	r31, 0x06	; 6
- 698:	81 83       	std	Z+1, r24	; 0x01
+ 676:	8f ef       	ldi	r24, 0xFF	; 255
+ 678:	e0 e0       	ldi	r30, 0x00	; 0
+ 67a:	f6 e0       	ldi	r31, 0x06	; 6
+ 67c:	81 83       	std	Z+1, r24	; 0x01
 	init32MHzClock();
- 69a:	0e 94 de 02 	call	0x5bc	; 0x5bc <init32MHzClock>
+ 67e:	0e 94 d0 02 	call	0x5a0	; 0x5a0 <init32MHzClock>
 	initUART();
- 69e:	0e 94 ec 02 	call	0x5d8	; 0x5d8 <initUART>
+ 682:	0e 94 de 02 	call	0x5bc	; 0x5bc <initUART>
     spi_set_up();
- 6a2:	0e 94 4c 01 	call	0x298	; 0x298 <spi_set_up>
+ 686:	0e 94 4c 01 	call	0x298	; 0x298 <spi_set_up>
 	intPID_gains();
- 6a6:	0e 94 05 03 	call	0x60a	; 0x60a <intPID_gains>
+ 68a:	0e 94 f7 02 	call	0x5ee	; 0x5ee <intPID_gains>
     initPWM();
- 6aa:	0e 94 a9 01 	call	0x352	; 0x352 <initPWM>
+ 68e:	0e 94 a9 01 	call	0x352	; 0x352 <initPWM>
     initUART();
- 6ae:	0e 94 ec 02 	call	0x5d8	; 0x5d8 <initUART>
+ 692:	0e 94 de 02 	call	0x5bc	; 0x5bc <initUART>
 	 ZeroGyros();
- 6b2:	0e 94 95 01 	call	0x32a	; 0x32a <ZeroGyros>
+ 696:	0e 94 95 01 	call	0x32a	; 0x32a <ZeroGyros>
 	#else
 		//round up by default
 		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
 	#endif
 
 	__builtin_avr_delay_cycles(__ticks_dc);
- 6b6:	2f ef       	ldi	r18, 0xFF	; 255
- 6b8:	37 ea       	ldi	r19, 0xA7	; 167
- 6ba:	81 e6       	ldi	r24, 0x61	; 97
- 6bc:	21 50       	subi	r18, 0x01	; 1
- 6be:	30 40       	sbci	r19, 0x00	; 0
- 6c0:	80 40       	sbci	r24, 0x00	; 0
- 6c2:	e1 f7       	brne	.-8      	; 0x6bc <main+0x2a>
- 6c4:	00 c0       	rjmp	.+0      	; 0x6c6 <main+0x34>
- 6c6:	00 00       	nop
+ 69a:	2f ef       	ldi	r18, 0xFF	; 255
+ 69c:	37 ea       	ldi	r19, 0xA7	; 167
+ 69e:	81 e6       	ldi	r24, 0x61	; 97
+ 6a0:	21 50       	subi	r18, 0x01	; 1
+ 6a2:	30 40       	sbci	r19, 0x00	; 0
+ 6a4:	80 40       	sbci	r24, 0x00	; 0
+ 6a6:	e1 f7       	brne	.-8      	; 0x6a0 <main+0x2a>
+ 6a8:	00 c0       	rjmp	.+0      	; 0x6aa <main+0x34>
+ 6aa:	00 00       	nop
 	 _delay_ms(1000);
 	 ZeroAccelerometers();
- 6c8:	0e 94 9c 01 	call	0x338	; 0x338 <ZeroAccelerometers>
- 6cc:	9f ef       	ldi	r25, 0xFF	; 255
- 6ce:	23 e2       	ldi	r18, 0x23	; 35
- 6d0:	34 ef       	ldi	r19, 0xF4	; 244
- 6d2:	80 e0       	ldi	r24, 0x00	; 0
- 6d4:	91 50       	subi	r25, 0x01	; 1
- 6d6:	20 40       	sbci	r18, 0x00	; 0
- 6d8:	30 40       	sbci	r19, 0x00	; 0
- 6da:	80 40       	sbci	r24, 0x00	; 0
- 6dc:	d9 f7       	brne	.-10     	; 0x6d4 <main+0x42>
- 6de:	00 c0       	rjmp	.+0      	; 0x6e0 <main+0x4e>
- 6e0:	00 00       	nop
+ 6ac:	0e 94 9c 01 	call	0x338	; 0x338 <ZeroAccelerometers>
+ 6b0:	9f ef       	ldi	r25, 0xFF	; 255
+ 6b2:	23 e2       	ldi	r18, 0x23	; 35
+ 6b4:	34 ef       	ldi	r19, 0xF4	; 244
+ 6b6:	80 e0       	ldi	r24, 0x00	; 0
+ 6b8:	91 50       	subi	r25, 0x01	; 1
+ 6ba:	20 40       	sbci	r18, 0x00	; 0
+ 6bc:	30 40       	sbci	r19, 0x00	; 0
+ 6be:	80 40       	sbci	r24, 0x00	; 0
+ 6c0:	d9 f7       	brne	.-10     	; 0x6b8 <main+0x42>
+ 6c2:	00 c0       	rjmp	.+0      	; 0x6c4 <main+0x4e>
+ 6c4:	00 00       	nop
     //DMA_Enable();
     //Setup_DMA_ReceiveChannel();
     //The receiving DMA channel will wait for characters
     //and write them to Rx_Buf
     //DMA_EnableChannel(DMA_RX_Channel);
 	intiLoopTimer();
- 6e2:	0e 94 38 03 	call	0x670	; 0x670 <intiLoopTimer>
+ 6c6:	0e 94 2a 03 	call	0x654	; 0x654 <intiLoopTimer>
 	 sei(); 
- 6e6:	78 94       	sei
+ 6ca:	78 94       	sei
 
 		while(1)
 		{
 	
 			nop();
- 6e8:	00 00       	nop
- 6ea:	fe cf       	rjmp	.-4      	; 0x6e8 <main+0x56>
+ 6cc:	00 00       	nop
+ 6ce:	fe cf       	rjmp	.-4      	; 0x6cc <main+0x56>
 
-000006ec <__vector_77>:
+000006d0 <__vector_77>:
 //2^16 = 65353  65536 -32000 = 33536
 
 // switch  to clock divisor = 4, so  32Mhz / 250Hz = 32000 ticks  
 /* Function to handle timer overflowing. */
 ISR(TCD0_OVF_vect)
 {
- 6ec:	1f 92       	push	r1
- 6ee:	0f 92       	push	r0
- 6f0:	0f b6       	in	r0, 0x3f	; 63
- 6f2:	0f 92       	push	r0
- 6f4:	11 24       	eor	r1, r1
- 6f6:	08 b6       	in	r0, 0x38	; 56
- 6f8:	0f 92       	push	r0
- 6fa:	18 be       	out	0x38, r1	; 56
- 6fc:	09 b6       	in	r0, 0x39	; 57
- 6fe:	0f 92       	push	r0
- 700:	19 be       	out	0x39, r1	; 57
- 702:	0b b6       	in	r0, 0x3b	; 59
- 704:	0f 92       	push	r0
- 706:	1b be       	out	0x3b, r1	; 59
- 708:	2f 93       	push	r18
- 70a:	3f 93       	push	r19
- 70c:	4f 93       	push	r20
- 70e:	5f 93       	push	r21
- 710:	6f 93       	push	r22
- 712:	7f 93       	push	r23
- 714:	8f 93       	push	r24
- 716:	9f 93       	push	r25
- 718:	af 93       	push	r26
- 71a:	bf 93       	push	r27
- 71c:	ef 93       	push	r30
- 71e:	ff 93       	push	r31
+ 6d0:	1f 92       	push	r1
+ 6d2:	0f 92       	push	r0
+ 6d4:	0f b6       	in	r0, 0x3f	; 63
+ 6d6:	0f 92       	push	r0
+ 6d8:	11 24       	eor	r1, r1
+ 6da:	08 b6       	in	r0, 0x38	; 56
+ 6dc:	0f 92       	push	r0
+ 6de:	18 be       	out	0x38, r1	; 56
+ 6e0:	09 b6       	in	r0, 0x39	; 57
+ 6e2:	0f 92       	push	r0
+ 6e4:	19 be       	out	0x39, r1	; 57
+ 6e6:	0b b6       	in	r0, 0x3b	; 59
+ 6e8:	0f 92       	push	r0
+ 6ea:	1b be       	out	0x3b, r1	; 59
+ 6ec:	2f 93       	push	r18
+ 6ee:	3f 93       	push	r19
+ 6f0:	4f 93       	push	r20
+ 6f2:	5f 93       	push	r21
+ 6f4:	6f 93       	push	r22
+ 6f6:	7f 93       	push	r23
+ 6f8:	8f 93       	push	r24
+ 6fa:	9f 93       	push	r25
+ 6fc:	af 93       	push	r26
+ 6fe:	bf 93       	push	r27
+ 700:	ef 93       	push	r30
+ 702:	ff 93       	push	r31
 	ControlLoop();
- 720:	0e 94 ca 02 	call	0x594	; 0x594 <ControlLoop>
+ 704:	0e 94 bc 02 	call	0x578	; 0x578 <ControlLoop>
 	TCD0.CNT = 0; 
- 724:	e0 e0       	ldi	r30, 0x00	; 0
- 726:	f9 e0       	ldi	r31, 0x09	; 9
- 728:	10 a2       	std	Z+32, r1	; 0x20
- 72a:	11 a2       	std	Z+33, r1	; 0x21
+ 708:	e0 e0       	ldi	r30, 0x00	; 0
+ 70a:	f9 e0       	ldi	r31, 0x09	; 9
+ 70c:	10 a2       	std	Z+32, r1	; 0x20
+ 70e:	11 a2       	std	Z+33, r1	; 0x21
 	
 }
- 72c:	ff 91       	pop	r31
- 72e:	ef 91       	pop	r30
- 730:	bf 91       	pop	r27
- 732:	af 91       	pop	r26
- 734:	9f 91       	pop	r25
- 736:	8f 91       	pop	r24
- 738:	7f 91       	pop	r23
- 73a:	6f 91       	pop	r22
- 73c:	5f 91       	pop	r21
- 73e:	4f 91       	pop	r20
- 740:	3f 91       	pop	r19
- 742:	2f 91       	pop	r18
- 744:	0f 90       	pop	r0
- 746:	0b be       	out	0x3b, r0	; 59
- 748:	0f 90       	pop	r0
- 74a:	09 be       	out	0x39, r0	; 57
- 74c:	0f 90       	pop	r0
- 74e:	08 be       	out	0x38, r0	; 56
- 750:	0f 90       	pop	r0
- 752:	0f be       	out	0x3f, r0	; 63
- 754:	0f 90       	pop	r0
- 756:	1f 90       	pop	r1
- 758:	18 95       	reti
+ 710:	ff 91       	pop	r31
+ 712:	ef 91       	pop	r30
+ 714:	bf 91       	pop	r27
+ 716:	af 91       	pop	r26
+ 718:	9f 91       	pop	r25
+ 71a:	8f 91       	pop	r24
+ 71c:	7f 91       	pop	r23
+ 71e:	6f 91       	pop	r22
+ 720:	5f 91       	pop	r21
+ 722:	4f 91       	pop	r20
+ 724:	3f 91       	pop	r19
+ 726:	2f 91       	pop	r18
+ 728:	0f 90       	pop	r0
+ 72a:	0b be       	out	0x3b, r0	; 59
+ 72c:	0f 90       	pop	r0
+ 72e:	09 be       	out	0x39, r0	; 57
+ 730:	0f 90       	pop	r0
+ 732:	08 be       	out	0x38, r0	; 56
+ 734:	0f 90       	pop	r0
+ 736:	0f be       	out	0x3f, r0	; 63
+ 738:	0f 90       	pop	r0
+ 73a:	1f 90       	pop	r1
+ 73c:	18 95       	reti
 
-0000075a <_exit>:
- 75a:	f8 94       	cli
+0000073e <_exit>:
+ 73e:	f8 94       	cli
 
-0000075c <__stop_program>:
- 75c:	ff cf       	rjmp	.-2      	; 0x75c <__stop_program>
+00000740 <__stop_program>:
+ 740:	ff cf       	rjmp	.-2      	; 0x740 <__stop_program>
