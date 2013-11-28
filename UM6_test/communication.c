@@ -43,7 +43,7 @@ uint8_t spi_master_recive_byte(SPI_Master_t *);
 
 /* Global variables */
  SPI_Master_t spiMasterF;
-  SPI_Master_t spiMasterE;
+ SPI_Master_t spiMasterE;
 
 /* Instantiate pointer to ssPort. */
 PORT_t *ssPortF = &PORTF;
@@ -91,7 +91,7 @@ void spi_set_up()
 		false,									// false to double clock mode
 		SPI_PRESCALER_DIV128_gc);				//32mHz /128 = 250kHz  MAX rate is 400kHz but there is not prescaler
 
-		
+		SPIF.DATA = 0x00;						// init SPI data register
 		
 		
 		/* Initialize SPI master on port F for the PC communication */
@@ -110,16 +110,18 @@ void spi_set_up()
 		SPI_MODE_0_gc,							//The UM6 SPI clock (SCK) is active high, with data clocked in on the first rising edge1
 		SPI_INTLVL_OFF_gc,
 		false,									// false to double clock mode
-		SPI_PRESCALER_DIV64_gc);				//32mHz /128 = 250kHz  MAX rate is 400kHz but there is not prescaler
+		SPI_PRESCALER_DIV128_gc);				//32mHz /128 = 250kHz  MAX rate is 400kHz but there is not prescaler
+		
+		SPIE.DATA = 0x00;						// init SPI data register
 
 }
 
 
 // SPI write read function
 // Load the register, this will start a transfer on MOSI
-//  Wait until the intrupt flag is set
+//  Wait until the intruders flag is set
 //  read the data from the data register, this was on MISO
-unsigned char spi_write_read(unsigned char spi_data)
+unsigned char spiIMU_write_read(unsigned char spi_data)
 {
 	SPIF.DATA = spi_data;
 	while(!(SPIF.STATUS & SPI_IF_bm)); // Wait until the data transfer is complete
@@ -129,12 +131,13 @@ unsigned char spi_write_read(unsigned char spi_data)
 
 // SPI write read function
 // Load the register, this will start a transfer on MOSI
-//  Wait until the intrupt flag is set
+//  Wait until the interrupt flag is set
 //  read the data from the data register, this was on MISO
-unsigned char spiPC_write_read(unsigned char spi_data)
+unsigned char spiPC_write_read(unsigned char spi_data1)
 {
-	SPIE.DATA = spi_data;
-	while(!(SPIE.STATUS & SPI_IF_bm)); // Wait until the data transfer is complete
+	SPIE.DATA = spi_data1;
+	while(!(SPIE.STATUS & SPI_IF_bm)); // Wait until the data transfer is complet
+	_delay_us(6);
 	return SPIE.DATA;
 }
 
@@ -240,8 +243,8 @@ void ZeroGyros()
 {
 	uint8_t dummy_read;
 	//psi = yaw  phi = roll    theta = pitch
-	dummy_read = spi_write_read(WRITE_COMMAND);
-	dummy_read = spi_write_read(ZERO_GYROS);
+	dummy_read = spiIMU_write_read(WRITE_COMMAND);
+	dummy_read = spiIMU_write_read(ZERO_GYROS);
 	
 	
 }
@@ -250,8 +253,8 @@ void ZeroAccelerometers()
 {
 	uint8_t dummy_read;
 
-	dummy_read = spi_write_read(WRITE_COMMAND);
-	dummy_read = spi_write_read(SET_ACCEL_REF);
+	dummy_read = spiIMU_write_read(WRITE_COMMAND);
+	dummy_read = spiIMU_write_read(SET_ACCEL_REF);
 	
 	
 }
@@ -261,8 +264,8 @@ void ZeroMagnetometer()
 	
 	uint8_t dummy_read;
 
-	dummy_read = spi_write_read(WRITE_COMMAND);
-	dummy_read = spi_write_read(SET_MAG_REF);
+	dummy_read = spiIMU_write_read(WRITE_COMMAND);
+	dummy_read = spiIMU_write_read(SET_MAG_REF);
 		
 }	
 
@@ -272,7 +275,7 @@ void ResetUM6_ToFactory()
 	
 	uint8_t dummy_read;
 
-	dummy_read = spi_write_read(WRITE_COMMAND);
-	dummy_read = spi_write_read(RESET_TO_FACTORY);
+	dummy_read = spiIMU_write_read(WRITE_COMMAND);
+	dummy_read = spiIMU_write_read(RESET_TO_FACTORY);
 	
 }

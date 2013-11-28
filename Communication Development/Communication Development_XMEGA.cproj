@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectVersion>6.1</ProjectVersion>
     <ToolchainName>com.Atmel.AVRGCC8.C</ToolchainName>
-    <ProjectGuid>{d09324b1-c51e-46d2-96a5-559dda63656e}</ProjectGuid>
+    <ProjectGuid>{c395820d-e91f-4540-afe5-aa42656b0fe6}</ProjectGuid>
     <avrdevice>ATxmega128A1</avrdevice>
     <avrdeviceseries>none</avrdeviceseries>
     <OutputType>Executable</OutputType>
@@ -12,30 +12,20 @@
     <OutputFileName>$(MSBuildProjectName)</OutputFileName>
     <OutputFileExtension>.elf</OutputFileExtension>
     <OutputDirectory>$(MSBuildProjectDirectory)\$(Configuration)</OutputDirectory>
-    <AssemblyName>UM6_test</AssemblyName>
-    <Name>UM6_test</Name>
-    <RootNamespace>UM6_test</RootNamespace>
+    <AssemblyName>Communication Development</AssemblyName>
+    <Name>Communication Development_XMEGA</Name>
+    <RootNamespace>Communication Development</RootNamespace>
     <ToolchainFlavour>Native</ToolchainFlavour>
-    <KeepTimersRunning>true</KeepTimersRunning>
-    <OverrideVtor>false</OverrideVtor>
-    <OverrideVtorValue>
-    </OverrideVtorValue>
-    <eraseonlaunchrule>0</eraseonlaunchrule>
-    <ProgFlashFromRam>true</ProgFlashFromRam>
-    <RamSnippetAddress>0x20000000</RamSnippetAddress>
-    <CacheFlash>true</CacheFlash>
-    <UncachedRange />
-    <BootSegment>0</BootSegment>
     <AsfFrameworkConfig>
       <framework-data xmlns="">
-        <options />
-        <configurations />
-        <files />
-        <documentation help="" />
-        <dependencies>
-          <content-extension eid="atmel.asf" uuidref="Atmel.ASF" version="3.7.2" />
-        </dependencies>
-      </framework-data>
+  <options />
+  <configurations />
+  <files />
+  <documentation help="" />
+  <dependencies>
+    <content-extension eid="atmel.asf" uuidref="Atmel.ASF" version="3.7.2" />
+  </dependencies>
+</framework-data>
     </AsfFrameworkConfig>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
@@ -93,7 +83,10 @@
     </ToolchainSettings>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="UM6_test.c">
+    <Compile Include="Communication Development.c">
+      <SubType>compile</SubType>
+    </Compile>
+    <Compile Include="communication.h">
       <SubType>compile</SubType>
     </Compile>
   </ItemGroup>
